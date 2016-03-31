@@ -1,5 +1,8 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -117,6 +120,49 @@ public class CSVFile {
         data.add(oneData2);
 
         return data;
+    }
+    
+    public File convertToTrans() {
+    	File Transfile = new File (this.file.getAbsolutePath());
+    
+    	BufferedReader in  = null;
+    	BufferedWriter out = null;
+    	
+    	String line = "";
+
+    	try {
+
+			in = new BufferedReader(new FileReader(this.file));
+			while ((line = in.readLine()) != null) {
+		
+			    // use comma as separator
+				String[] status = line.split(Character.toString(this.separator));
+		
+				for (int i = 2; i < status.length; ++i) {
+					
+				}
+				System.out.println(status[0] + " " + status[1] + " " + status[2] + " " + status[3]);
+		
+			}
+    	} 
+    	catch (FileNotFoundException e) {
+    		e.printStackTrace();
+    	} 
+    	catch (IOException e) {
+    		e.printStackTrace();
+    	} 
+    	finally {
+    		if (in != null) {
+    			try {
+    				in.close();
+    			} 
+    			catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	}
+    	System.out.println("Done");
+		return Transfile;
     }
     
 	public static void main(String[] args) throws IOException {
