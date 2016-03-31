@@ -2,9 +2,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class CSVFile {
 
@@ -19,7 +20,6 @@ public class CSVFile {
     }
     
     public void write(List<Map<String, String>> mappedData, String[] titles) throws IOException {
-
         if (mappedData == null) 
             throw new IllegalArgumentException("la liste ne peut pas être nulle");
         if (titles == null)
@@ -56,10 +56,11 @@ public class CSVFile {
                 write(value, bw);
 
             }
+            
             bw.write("\n");
-            bw.close();
-            fw.close();
         }
+        bw.close();
+        fw.close();
     }
     
     public static String getResourcePath(String fileName) {
@@ -97,11 +98,35 @@ public class CSVFile {
         bw.write(value);
     }
     
-	public static void main(String[] args) {
-		String FILE_NAME = "out/test.csv";
+    private List<Map<String, String>> createMap() {
+
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+
+        Map<String, String> oneData1 = new HashMap<String, String>();
+        oneData1.put("Id", "1");
+        oneData1.put("Prénom", "Idéfix");
+        oneData1.put("Couleur", "Blanc");
+        oneData1.put("Age", "15");
+        data.add(oneData1);
+
+        Map<String, String> oneData2 = new HashMap<String, String>();
+        oneData2.put("Id", "2");
+        oneData2.put("Prénom", "Milou \"de Tintin\"");
+        oneData2.put("Couleur", "Blanc");
+        oneData2.put("Age", "7");
+        data.add(oneData2);
+
+        return data;
+    }
+    
+	public static void main(String[] args) throws IOException {
+		String FILE_NAME = "src/test.csv";
 		File file;
 		file = getResource(FILE_NAME);
 		CSVFile CSV = new CSVFile(file, ';');
+		List<Map<String, String>> data = CSV.createMap();
+		String[] wantedTitles = { "Age", "Couleur", "Prénom", "Id" };
+		CSV.write(data, wantedTitles);
 	}
 
 }
