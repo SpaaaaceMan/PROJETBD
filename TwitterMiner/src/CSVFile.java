@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,14 +136,17 @@ public class CSVFile {
 			in = new BufferedReader(new FileReader(this.file));
 			while ((line = in.readLine()) != null) {
 		
+				List<String> referenceArray = new ArrayList<String>();
+				
 			    // use comma as separator
 				String[] status = line.split(Character.toString(this.separator));
+				List<String> currentLine = new ArrayList<String>();
+				
+				Collections.addAll(currentLine, status);
 		
 				for (int i = 2; i < status.length; ++i) {
-					
-				}
-				System.out.println(status[0] + " " + status[1] + " " + status[2] + " " + status[3]);
-		
+					System.out.println(" " + status[i]);
+				}		
 			}
     	} 
     	catch (FileNotFoundException e) {
