@@ -108,7 +108,8 @@ public class TwitterHandler {
 					
 					data.put("Date", status.getCreatedAt().toString()); 
 					data.put("ScreenName", "@" + status.getUser().getScreenName()); 
-					data.put("Text", status.getText());
+					data.put("Text", status.getText().replace(" ", "\";\""));
+					
 					tweets.add(data);
 				}
 				cmpt++;
