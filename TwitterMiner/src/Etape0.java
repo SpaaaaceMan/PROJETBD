@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import twitter4j.Logger;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -29,20 +33,40 @@ public class Etape0 {
 		System.out.println("key:" + twitter.getConfiguration().getOAuthConsumerKey());
 		System.out.println("secret: " + twitter.getConfiguration().getOAuthConsumerSecret());
         
-        String user = "Frederic_Molas";
-        Query query = new Query("from:"+user);
-        query.setCount(100);
-        query.setSince("2011-01-01");
-        try {
-            QueryResult result = twitter.search(query);
-            System.out.println("Count : " + result.getTweets().size()) ;
-            for (Status tweet : result.getTweets()) {
-                System.out.println("text : " + tweet.getText());
-            }
-        } 
-        catch (TwitterException e) {
-            e.printStackTrace();
-        }
+		String recherche = "";
+
+		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
+
+		System.out.println("Recherche de tweet contenant : ");
+
+		try {
+			recherche = input.readLine();
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		Query query = new Query(recherche);
+		
+		
+		try {
+			QueryResult resultQuery = twitter.search(query);
+			for (Status status : resultQuery.getTweets()) {
+				System.out.println(status.getCreatedAt() + 
+						" : @" + status.getUser().getScreenName() + 
+						" : " + status.getText());
+			}
+		}
+		catch (TwitterException e1) {
+			e1.printStackTrace();
+		}
+		
+        /*query.setCount(100);
+        query.setSince("2011-01-01");*/
+		
+
+		//System.out.println("Count : " + resultQuery.getTweets().size()) ;
+		
         logger.info("done! ");
 	}
 	
