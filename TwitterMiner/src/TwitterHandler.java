@@ -16,7 +16,7 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 
-public class Etape0 {
+public class TwitterHandler {
 	
 	private String OAuthConsumerKey;
 	private String OAuthConsumerSecret;
@@ -25,7 +25,7 @@ public class Etape0 {
 	
 	private Twitter twitter;
 	
-	public Etape0 (String OAuthConsumerKey, String OAuthConsumerSecret
+	public TwitterHandler (String OAuthConsumerKey, String OAuthConsumerSecret
 			, String OAuthAccessToken, String OAuthAccessTokenSecret) {
 		
 		this.OAuthConsumerKey       = OAuthConsumerKey;
@@ -37,7 +37,7 @@ public class Etape0 {
 		
 	}
 	
-	public Etape0 () {
+	public TwitterHandler () {
 		
 		this.OAuthConsumerKey       = "lTaMcd8utKwMCXbBTyNqsgZsz";
 		this.OAuthConsumerSecret    = "IEXIf7AQp0C0XiefYiTC14xurcFbSvlWqNcSHfaZQp8D4Pl4Re";

@@ -123,7 +123,7 @@ public class CSVFile {
 		String FILE_NAME = "src/test.csv";
 		File file = getResource(FILE_NAME);
 		CSVFile CSV = new CSVFile(file, ';');
-		Etape0 result = new Etape0();
+		TwitterHandler result = new TwitterHandler();
 		List<Map<String, String>> data = result.searchBy();
 		String[] wantedTitles = { "Date", "ScreenName", "Text"};
 		CSV.write(data, wantedTitles);
