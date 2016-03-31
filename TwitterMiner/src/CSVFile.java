@@ -62,6 +62,18 @@ public class CSVFile {
         }
     }
     
+    public static String getResourcePath(String fileName) {
+        final File f = new File("");
+        final String dossierPath = f.getAbsolutePath() + File.separator + fileName;
+        return dossierPath;
+    }
+    
+    public static File getResource(String fileName) {
+        final String completeFileName = getResourcePath(fileName);
+        File file = new File(completeFileName);
+        return file;
+    }
+    
     private void write(String value, BufferedWriter bw) throws IOException {
         if (value == null)
             value = "";
@@ -86,8 +98,10 @@ public class CSVFile {
     }
     
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		String FILE_NAME = "out/test.csv";
+		File file;
+		file = getResource(FILE_NAME);
+		CSVFile CSV = new CSVFile(file, ';');
 	}
 
 }
