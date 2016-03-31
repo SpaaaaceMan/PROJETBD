@@ -121,11 +121,11 @@ public class CSVFile {
     
 	public static void main(String[] args) throws IOException {
 		String FILE_NAME = "src/test.csv";
-		File file;
-		file = getResource(FILE_NAME);
+		File file = getResource(FILE_NAME);
 		CSVFile CSV = new CSVFile(file, ';');
-		List<Map<String, String>> data = CSV.createMap();
-		String[] wantedTitles = { "Age", "Couleur", "Prénom", "Id" };
+		Etape0 result = new Etape0();
+		List<Map<String, String>> data = result.searchBy();
+		String[] wantedTitles = { "Date", "ScreenName", "Text"};
 		CSV.write(data, wantedTitles);
 	}
 

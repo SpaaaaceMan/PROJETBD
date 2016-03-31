@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,8 +67,65 @@ public class Etape0 {
 	}
 	
 	public List<Map<String, String>> searchBy () {
+		System.out.println("Connection...");
 		
-		return null;		
+		ConfigurationBuilder builder = new ConfigurationBuilder();
+		builder.setOAuthConsumerKey("lTaMcd8utKwMCXbBTyNqsgZsz");
+		builder.setOAuthConsumerSecret("IEXIf7AQp0C0XiefYiTC14xurcFbSvlWqNcSHfaZQp8D4Pl4Re");
+		
+		builder.setOAuthAccessToken("2496888542-Lr7DdmQxvm6bVOdb0z2DYRHgenlJLarkPuhDPd6");
+		builder.setOAuthAccessTokenSecret("9fK9gFDfIMLdmOyAkwDtvcNZBvRClVsM8SRlzQSwViwcF");
+		Configuration configuration = builder.build();
+		
+		TwitterFactory factory = new TwitterFactory(configuration);
+		Twitter twitter = factory.getInstance();
+		
+		System.out.println("Connected...");
+        
+		String recherche = "";
+
+		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
+
+		System.out.println("Recherche de tweet contenant : ");
+
+		try {
+			recherche = input.readLine();
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		Query query = new Query(recherche);
+		int cmpt = 0;
+		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
+		try {
+			while (cmpt < 10000){
+
+				QueryResult resultQuery = twitter.search(query);
+				for (Status status : resultQuery.getTweets()) {
+					
+					Map<String, String> data = new HashMap<String, String>();
+					
+					data.put("Date", status.getCreatedAt().toString()); 
+					data.put("ScreenName", "@" + status.getUser().getScreenName()); 
+					data.put("Text", status.getText());
+					tweets.add(data);
+				}
+				cmpt++;
+			}
+		}
+		catch (TwitterException e1) {
+			e1.printStackTrace();
+		}
+
+        /*query.setCount(100);
+        query.setSince("2011-01-01");*/
+		
+
+		//System.out.println("Count : " + resultQuery.getTweets().size()) ;
+		
+		System.out.println("Done !" + cmpt);
+		return tweets;		
 	}
 
 	public static void main(String[] args) {
