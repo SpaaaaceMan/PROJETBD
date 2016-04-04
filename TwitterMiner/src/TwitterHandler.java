@@ -66,40 +66,17 @@ public class TwitterHandler {
 		return true;
 	}
 	
-	public List<Map<String, String>> searchBy () {
+	public List<Map<String, String>> searchBy (String recherche, int nbStatus ) {
 		System.out.println("Connection...");
-		
-		ConfigurationBuilder builder = new ConfigurationBuilder();
-		builder.setOAuthConsumerKey("lTaMcd8utKwMCXbBTyNqsgZsz");
-		builder.setOAuthConsumerSecret("IEXIf7AQp0C0XiefYiTC14xurcFbSvlWqNcSHfaZQp8D4Pl4Re");
-		
-		builder.setOAuthAccessToken("2496888542-Lr7DdmQxvm6bVOdb0z2DYRHgenlJLarkPuhDPd6");
-		builder.setOAuthAccessTokenSecret("9fK9gFDfIMLdmOyAkwDtvcNZBvRClVsM8SRlzQSwViwcF");
-		Configuration configuration = builder.build();
-		
-		TwitterFactory factory = new TwitterFactory(configuration);
-		Twitter twitter = factory.getInstance();
-		
-		System.out.println("Connected...");
-        
-		String recherche = "";
-
-		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
 
 		System.out.println("Recherche de tweet contenant : ");
 
-		try {
-			recherche = input.readLine();
-		} 
-		catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
 		Query query = new Query(recherche);
-		int cmpt = 0;
+		
+		int cpt = 0;
 		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
 		try {
-			while (cmpt < 10000){
+			while (cpt < 100){
 
 				QueryResult resultQuery = twitter.search(query);
 				for (Status status : resultQuery.getTweets()) {
@@ -112,7 +89,7 @@ public class TwitterHandler {
 					
 					tweets.add(data);
 				}
-				cmpt++;
+				++cpt;
 			}
 		}
 		catch (TwitterException e1) {
@@ -125,9 +102,13 @@ public class TwitterHandler {
 
 		//System.out.println("Count : " + resultQuery.getTweets().size()) ;
 		
-		System.out.println("Done !" + cmpt);
+		System.out.println("Done !" + cpt);
 		return tweets;		
 	}
+	
+	public Twitter getTwitter() {
+		return twitter;
+	}	
 
 	public static void main(String[] args) {
 		System.out.println("Connection...");
@@ -181,8 +162,4 @@ public class TwitterHandler {
 		
 		System.out.println("Done !");
 	}
-
-	public Twitter getTwitter() {
-		return twitter;
-	}	
 }
