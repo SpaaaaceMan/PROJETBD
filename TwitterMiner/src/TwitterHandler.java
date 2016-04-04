@@ -63,16 +63,34 @@ public class TwitterHandler {
 		return true;
 	}
 	
+	private void sleep (int timeToSleep) {
+		try {
+			for (int i = 0; i < timeToSleep; ++i) {
+				Thread.sleep(1000);
+				System.out.print(".");
+			}
+			System.out.println();
+		} 
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public List<Map<String, String>> searchBy (String recherche, int nbStatus ) {
 
+		long sinceId = 0l;
+		
 		Query query = new Query(recherche);
+		query.setCount(100);
 		
 		int cpt = 0;
 		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
 		try {
 			while (cpt < nbStatus){
 
+				query.setSinceId(sinceId);
 				QueryResult resultQuery = twitter.search(query);
+				sinceId = resultQuery.getSinceId();
 				for (Status status : resultQuery.getTweets()) {
 					
 					Map<String, String> data = new HashMap<String, String>();
@@ -86,16 +104,23 @@ public class TwitterHandler {
 						data.put("Word" + i, splitedText[i]);
 					}					
 					tweets.add(data);
+					
+					System.out.println(status.getCreatedAt().toString() + 
+							    " @" + status.getUser().getScreenName() +
+							    " "  + status.getText());
+					++cpt;
+					
+					/*if (cpt % 100 == 0) {	
+						// Sleep for 15 seconds = 60 requests per 15 minutes
+						System.out.println("Waiting 15 seconds for the next 100 status");
+						this.sleep(15);
+					}*/
 				}
-				++cpt;
 				
-				if (cpt % 100 == 0) {
-					System.out.println("Waiting 15 minutes for the next 100 status");
-					try {
-						Thread.sleep(1000 * 60 * 15);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				if (cpt % 100 == 0) {	
+					// Sleep for 15 seconds = 60 requests per 15 minutes
+					System.out.println("Waiting 15 seconds for the next 100 status");
+					this.sleep(15);
 				}
 			}
 		}

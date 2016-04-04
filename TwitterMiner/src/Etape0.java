@@ -17,6 +17,8 @@ public class Etape0 {
 		
 		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
 
+		int nbTwitt = 10000;
+		
 		System.out.println("Mot à rechercher : ");
 		
 		String recherche = null;
@@ -27,9 +29,9 @@ public class Etape0 {
 			e1.printStackTrace();
 		}
 		
-		System.out.println("Recherche de tweet contenant : " + recherche);
+		System.out.println("Recherche de " + nbTwitt + " tweet contenant : " + recherche);
 		
-		List<Map<String, String>> data = result.searchBy(recherche, 10000);
+		List<Map<String, String>> data = result.searchBy(recherche, nbTwitt);
 		
 		String[] wantedTitles = new String[data.get(0).size()];
 		
@@ -53,7 +55,7 @@ public class Etape0 {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Done! " + wantedTitles.length + " status get");
+		System.out.println("Done! " + data.get(0).size() + " status get");
 	}
 
 }
