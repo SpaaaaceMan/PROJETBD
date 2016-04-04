@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,16 +64,13 @@ public class TwitterHandler {
 	}
 	
 	public List<Map<String, String>> searchBy (String recherche, int nbStatus ) {
-		System.out.println("Connection...");
-
-		System.out.println("Recherche de tweet contenant : ");
 
 		Query query = new Query(recherche);
 		
 		int cpt = 0;
 		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
 		try {
-			while (cpt < 100){
+			while (cpt < nbStatus){
 
 				QueryResult resultQuery = twitter.search(query);
 				for (Status status : resultQuery.getTweets()) {
@@ -85,11 +79,24 @@ public class TwitterHandler {
 					
 					data.put("Date", status.getCreatedAt().toString()); 
 					data.put("ScreenName", "@" + status.getUser().getScreenName()); 
-					data.put("Text", status.getText().replace(" ", "\";\""));
 					
+					String[] splitedText = status.getText().split(" ");
+					
+					for (int i = 0; i < splitedText.length; ++i) {
+						data.put("Word" + i, splitedText[i]);
+					}					
 					tweets.add(data);
 				}
 				++cpt;
+				
+				if (cpt % 100 == 0) {
+					System.out.println("Waiting 15 minutes for the next 100 status");
+					try {
+						Thread.sleep(1000 * 60 * 15);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		catch (TwitterException e1) {
@@ -101,8 +108,7 @@ public class TwitterHandler {
 		
 
 		//System.out.println("Count : " + resultQuery.getTweets().size()) ;
-		
-		System.out.println("Done !" + cpt);
+	
 		return tweets;		
 	}
 	
@@ -110,7 +116,7 @@ public class TwitterHandler {
 		return twitter;
 	}	
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println("Connection...");
 		
 		ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -154,12 +160,12 @@ public class TwitterHandler {
 			e1.printStackTrace();
 		}
 		
-        /*query.setCount(100);
-        query.setSince("2011-01-01");*/
+        //query.setCount(100);
+        //query.setSince("2011-01-01");
 		
 
 		//System.out.println("Count : " + resultQuery.getTweets().size()) ;
 		
 		System.out.println("Done !");
-	}
+	}*/
 }

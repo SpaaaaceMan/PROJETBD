@@ -169,7 +169,7 @@ public class CSVFile {
 		return Transfile;
     }
     
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		String FILE_NAME = "src/test.csv";
 		File file = getResource(FILE_NAME);
 		CSVFile CSV = new CSVFile(file, ';');
@@ -177,6 +177,6 @@ public class CSVFile {
 		List<Map<String, String>> data = result.searchBy();
 		String[] wantedTitles = { "Date", "ScreenName", "Text"};
 		CSV.write(data, wantedTitles);
-	}
+	}*/
 
 }
