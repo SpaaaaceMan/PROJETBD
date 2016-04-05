@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Etape1 {
 	
 	/**
@@ -106,8 +105,10 @@ public class Etape1 {
 					System.out.print(displayStr);
 					out.write(displayStr);
 				}
-				System.out.println();
-				out.newLine();;
+				if (displayedLine.size() > 0) {
+					System.out.println();
+					out.newLine();
+				}
 			}
 			
     	} 
@@ -137,12 +138,14 @@ public class Etape1 {
     }
 
 	public static void main(String[] args) {
-		if (args.length < 4) {
+		//We need all required arguments
+		if (args.length < 3) {
 			System.out.println("error : not enough arguments. Usage : Etape1 <Trans file path(parent repositeray must exists)>" +
 					"<Csv file path (must exist)> <Csv separator(, or ; in most cases)>");
 		}
+		//If we have enough we go!
 		else {
-			Etape1.convertToTrans(args[1], args[2], args[3]);
+			Etape1.convertToTrans(args[0], args[1], args[2]);
 		}
 	}
 
