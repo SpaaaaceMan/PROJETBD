@@ -85,12 +85,12 @@ public class TwitterHandler {
 		int cpt = 0;
 		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
 		
-		try {
+		try { 
 			while (cpt < nbStatus){
 
 				query.setSinceId(sinceId);
 				QueryResult resultQuery = twitter.search(query);
-				sinceId = resultQuery.getSinceId();
+				sinceId = resultQuery.getMaxId();
 				for (Status status : resultQuery.getTweets()) {
 					int max = 0;
 					Map<String, String> data = new HashMap<String, String>();

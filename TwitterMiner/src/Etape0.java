@@ -17,7 +17,7 @@ public class Etape0 {
 		
 		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
 
-		int nbTwitt = 10000;
+		int nbTwitt = 10001;
 		
 		System.out.println("Mot � rechercher : ");
 		
