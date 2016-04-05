@@ -24,40 +24,62 @@ public class CSVFile {
     }
     
     public void write(List<Map<String, String>> mappedData, String[] titles) throws IOException {
+    	
         if (mappedData == null) 
             throw new IllegalArgumentException("la liste ne peut pas être nulle");
+        
         if (titles == null)
             throw new IllegalArgumentException("les titres ne peuvent pas être nuls");
+        
         FileWriter fw = null;
+        
 		try {
 			fw = new FileWriter(file);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
         BufferedWriter bw = new BufferedWriter(fw);
 
         // Les titres
         boolean first = true;
+        
         for (String title : titles) {
+        	
             if (first)
                 first = false;
             else
                 bw.write(separator);
+            
             write(title, bw);
         }
         bw.write("\n");
 
         // Les données
-        for (Map<String, String> oneData : mappedData) {
+        for (int j = 0; j < mappedData.size() - 1; j++) {
             first = true;
-            for (String title : titles) {
+            
+            for (int i = 0; i < mappedData.get(j).size(); ++i){
+            //for (String title : titles) {
+            	
                 if (first)
                     first = false;
                 else
                     bw.write(separator);
-                final String value = oneData.get(title);
-                write(value, bw);
+                
+                if (i == 0){
+                	final String value = mappedData.get(j).get("Date");
+                	write(value, bw);
+                }
+                else if (i == 1){
+                	final String value = mappedData.get(j).get("ScreenName");
+                	write(value, bw);
+                }
+                else {
+                	final String value = mappedData.get(j).get("Word" + i);
+                	write(value, bw);
+                }
 
             }
             

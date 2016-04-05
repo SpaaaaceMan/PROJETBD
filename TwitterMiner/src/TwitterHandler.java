@@ -76,15 +76,15 @@ public class TwitterHandler {
 		}
 	}
 	
-	public List<Map<String, String>> searchBy (String recherche, int nbStatus ) {
+	public List<Map<String, String>> searchBy (String recherche, int nbStatus) {
 
 		long sinceId = 0l;
 		
 		Query query = new Query(recherche);
 		query.setCount(100);
-		
 		int cpt = 0;
 		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
+		
 		try {
 			while (cpt < nbStatus){
 
@@ -92,7 +92,7 @@ public class TwitterHandler {
 				QueryResult resultQuery = twitter.search(query);
 				sinceId = resultQuery.getSinceId();
 				for (Status status : resultQuery.getTweets()) {
-					
+					int max = 0;
 					Map<String, String> data = new HashMap<String, String>();
 					
 					data.put("Date", status.getCreatedAt().toString()); 
@@ -102,20 +102,31 @@ public class TwitterHandler {
 					
 					for (int i = 0; i < splitedText.length; ++i) {
 						data.put("Word" + i, splitedText[i]);
+						
+						if (i > max){
+							max = i;
+						}
+						
 					}					
+					
+					data.put("Limite", String.valueOf(max));
+					
 					tweets.add(data);
 					
 					System.out.println(status.getCreatedAt().toString() + 
 							    " @" + status.getUser().getScreenName() +
 							    " "  + status.getText());
-					++cpt;
+					System.out.println(cpt);
 					
-					/*if (cpt % 100 == 0) {	
-						// Sleep for 15 seconds = 60 requests per 15 minutes
-						System.out.println("Waiting 15 seconds for the next 100 status");
-						this.sleep(15);
-					}*/
+					cpt++;
+					
+					if (cpt % 100 == 0){
+						System.out.println(cpt);
+						break;
+					}
 				}
+				
+				System.out.println(cpt);
 				
 				if (cpt % 100 == 0) {	
 					// Sleep for 15 seconds = 60 requests per 15 minutes
@@ -131,10 +142,15 @@ public class TwitterHandler {
         /*query.setCount(100);
         query.setSince("2011-01-01");*/
 		
+		/*data.put("MAX", String.valueOf(max));
+		tweets.add(data);*/
+		
+		System.out.println(tweets);
+		this.sleep(20);
 
 		//System.out.println("Count : " + resultQuery.getTweets().size()) ;
 	
-		return tweets;		
+		return tweets;
 	}
 	
 	public Twitter getTwitter() {

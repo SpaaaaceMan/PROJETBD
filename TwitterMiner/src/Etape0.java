@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Etape0 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		
 		String FILE_NAME = "src/test.csv";
 		File file = CSVFile.getResource(FILE_NAME);
@@ -17,9 +17,9 @@ public class Etape0 {
 		
 		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
 
-		int nbTwitt = 10000;
+		int nbTwitt = 97;
 		
-		System.out.println("Mot à rechercher : ");
+		System.out.println("Mot ï¿½ rechercher : ");
 		
 		String recherche = null;
 		try {
@@ -33,15 +33,29 @@ public class Etape0 {
 		
 		List<Map<String, String>> data = result.searchBy(recherche, nbTwitt);
 		
-		String[] wantedTitles = new String[data.get(0).size()];
+		int max = 0;
 		
-		for (int i = 0; i < data.get(0).size(); ++i) {
+		for (int i = 0; i < data.size(); ++i){
+			if (Integer.parseInt(data.get(i).get("Limite")) > max){
+				max = Integer.parseInt(data.get(i).get("Limite"));
+			}
+		}
+
+		
+		String[] wantedTitles = new String[max];
+
+		
+		
+		for (int i = 0; i < max; ++i) {
+			
 			if (i == 0) {
 				wantedTitles[i] = "Date";
 			}
+			
 			else if (i == 1) {
 				wantedTitles[i] = "ScreenName";
 			}
+			
 			else {
 				wantedTitles[i] = "Word" + (i - 2);
 			}
@@ -55,7 +69,9 @@ public class Etape0 {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Done! " + data.get(0).size() + " status get");
+		System.out.println("Done! " + (data.size()-1) + " status get");
+		System.out.println(data.get(0));
+		System.out.println(data.get(1));
 	}
 
 }
