@@ -17,7 +17,7 @@ public class Etape1 {
 	/**
      * Function to convert the CSV File to a Trans File for the apriori algorithim
      */
-    public static File convertToTrans(String transFilePath, String csvFilePath, char separator) {
+    public static File convertToTrans(String transFilePath, String csvFilePath, String separator) {
     	//Create the file
     	File transFile = null;
     
@@ -54,7 +54,7 @@ public class Etape1 {
 			while ((line = in.readLine()) != null) {
 				
 			    // use the given separator to split the CSV
-				String[] status = line.split(Character.toString(separator));
+				String[] status = line.split(separator);
 				
 				//The current splited line
 				List<String> currentLine = new ArrayList<String>();
@@ -137,7 +137,13 @@ public class Etape1 {
     }
 
 	public static void main(String[] args) {
-		Etape1.convertToTrans("src/test.trans", "src/testConv.csv", ',');
+		if (args.length < 4) {
+			System.out.println("error : not enough arguments. Usage : Etape1 <Trans file path(parent repositeray must exists)>" +
+					"<Csv file path (must exist)> <Csv separator(, or ; in most cases)>");
+		}
+		else {
+			Etape1.convertToTrans(args[1], args[2], args[3]);
+		}
 	}
 
 }
