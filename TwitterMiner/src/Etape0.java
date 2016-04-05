@@ -19,7 +19,7 @@ public class Etape0 {
 
 		int nbTwitt = 10001;
 		
-		System.out.println("Mot � rechercher : ");
+		System.out.println("Mot à rechercher : ");
 		
 		String recherche = null;
 		try {
