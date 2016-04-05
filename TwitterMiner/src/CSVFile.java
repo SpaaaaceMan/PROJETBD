@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
+
 public class CSVFile {
 
 	private File file;
@@ -83,6 +85,66 @@ public class CSVFile {
 
             }
             
+            bw.write("\n");
+        }
+        bw.close();
+        fw.close();
+    }
+    
+    public void writeTrans(List<Map<String, String>> mappedData, ArrayList<String> titles) throws IOException {
+    	
+        if (mappedData == null) 
+            throw new IllegalArgumentException("la liste ne peut pas être nulle");
+        
+        if (titles == null)
+            throw new IllegalArgumentException("les titres ne peuvent pas être nuls");
+        
+        FileWriter fw = null;
+        
+		try {
+			fw = new FileWriter(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        // Les titres
+        boolean first = true;
+        
+        for (String title : titles) {
+            if (first)
+                first = false;
+            else
+                bw.write(separator);
+            write(title, bw);
+        }
+        bw.write("\n");
+
+        // Les données
+        for (int j = 0; j < mappedData.size(); j++) {
+            first = true;
+            
+            for (int i = 0; i < mappedData.get(j).size(); ++i){
+            //for (String title : titles) {
+                if (first)
+                    first = false;
+                else
+                    bw.write(separator);
+                
+                if (i != mappedData.get(j).size() - 1){
+                	final String value = mappedData.get(j).get("Motif " + i);
+                	bw.write(value);
+                }
+                else {
+                	final String value = mappedData.get(j).get("Support");
+                	String separators = "";
+                	for (int k = 0; k < titles.size() - mappedData.get(j).size(); ++k)
+                		separators += separator;
+                	bw.write(separators + value);
+                }
+            }
             bw.write("\n");
         }
         bw.close();
