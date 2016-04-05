@@ -118,6 +118,10 @@ public class TwitterHandler {
 							    " "  + status.getText());
 					System.out.println(cpt);
 					
+					if (nbStatus == cpt) {
+						break;
+					}
+					
 					cpt++;
 					
 					if (cpt % 100 == 0){
@@ -145,8 +149,6 @@ public class TwitterHandler {
 		/*data.put("MAX", String.valueOf(max));
 		tweets.add(data);*/
 		
-		System.out.println(tweets);
-		this.sleep(20);
 
 		//System.out.println("Count : " + resultQuery.getTweets().size()) ;
 	
