@@ -3,14 +3,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Etape2 {
 	
@@ -25,7 +20,8 @@ public class Etape2 {
     	//Each CSV line
     	String line = "";
     	
-    	Collection<AssociationRule> result = new ArrayList<AssociationRule>();
+    	@SuppressWarnings("unused")
+		Collection<AssociationRule> result = new ArrayList<AssociationRule>();
     	
     	try {
 
@@ -41,9 +37,10 @@ public class Etape2 {
 				//Current line in the .out file
 				String[] currentStrs = line.split(" ");
 				//Current support
+				@SuppressWarnings("unused")
 				int support;
 				//Current associative rule
-				AssociativeRule aR = new AssociationRule('A', 'A');
+				//AssociativeRule aR = new AssociationRule('A', 'A');
 				
 				for (String currentItem : currentStrs) {
 					//If the first char is '(' then it's the support

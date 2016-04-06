@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
-
 public class CSVFile {
 
 	private File file;
@@ -186,7 +184,8 @@ public class CSVFile {
         bw.write(value);
     }
     
-    private List<Map<String, String>> createMap() {
+    @SuppressWarnings("unused")
+	private List<Map<String, String>> createMap() {
 
         List<Map<String, String>> data = new ArrayList<Map<String, String>>();
 
@@ -211,7 +210,8 @@ public class CSVFile {
     	File Transfile = new File (this.file.getAbsolutePath());
     
     	BufferedReader in  = null;
-    	BufferedWriter out = null;
+    	@SuppressWarnings("unused")
+		BufferedWriter out = null;
     	
     	String line = "";
 
@@ -220,6 +220,7 @@ public class CSVFile {
 			in = new BufferedReader(new FileReader(this.file));
 			while ((line = in.readLine()) != null) {
 		
+				@SuppressWarnings("unused")
 				List<String> referenceArray = new ArrayList<String>();
 				
 			    // use comma as separator
