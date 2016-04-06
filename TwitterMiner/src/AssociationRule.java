@@ -2,24 +2,32 @@ import java.util.Collection;
 
 public class AssociationRule {
 
-	private Collection<Character> leftValue;
-	private Collection<Character> rightValue;
+	private Collection<Integer> leftValue;
+	private Collection<Integer> rightValue;
 	
-	public AssociationRule(Collection<Character> leftValue, Collection<Character> rightValue) {
+	public AssociationRule(Collection<Integer> leftValue, Collection<Integer> rightValue) {
 		this.leftValue  = leftValue;
 		this.rightValue = rightValue;
 	}
 	
+	public Collection<Integer> getLeftValue() {
+		return leftValue;
+	}
+
+	public Collection<Integer> getRightValue() {
+		return rightValue;
+	}
+
 	@Override
 	public String toString() {
 		String str = "";
 		
-		for (Character lChar : leftValue) {
-			str += lChar + " ";
+		for (Integer lValue : leftValue) {
+			str += lValue + ", ";
 		}
 		str += "→ ";
-		for (Character rChar : rightValue) {
-			str += rChar + " ";
+		for (Integer rValue : rightValue) {
+			str += rValue + ", ";
 		}
 		
 		return str;
