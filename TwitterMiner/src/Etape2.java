@@ -13,6 +13,61 @@ import java.util.Map.Entry;
 
 public class Etape2 {
 	
+	public static Collection<String> getAllUnderItemSet (String itemSet) {
+		//This is all under non null item from item
+		ArrayList<String> underItems = new ArrayList<String>();
+		//We add the first level
+		underItems.addAll(level0Items);
+		//This is the underItems offset
+		int offSet = 0;
+		while (true) {
+			//Current underItem list
+			Collection<String> currentUnderItems = null;
+			
+			//Level 0 item that we need to add
+			ArrayList<String> currentLevel0Items = new ArrayList<String>();
+			currentLevel0Items.addAll(level0Items);
+			
+			//We build the new  level of under item
+			for (int i = 0; (i + offSet) < underItems.size(); ++i) {
+				//Current underItem list
+				currentUnderItems = new ArrayList<String>();
+				//We delete the current Item content from current Level0 Items
+				for (int j = 0; j < underItems.get(i + offSet).length(); ++j) {
+					String currentItem = "" + underItems.get(i + offSet).charAt(j);
+					currentLevel0Items.remove(currentItem);
+				}
+				
+				//If it's empty then we have finished for this under items level
+				if (currentLevel0Items.size() <= 0) {
+					break;
+				}
+				
+				//Now we can add each new under item from this last under Item level
+				for (int j = 0; j < currentLevel0Items.size(); ++j) {
+					String itemToAdd = underItems.get(i + offSet) + currentLevel0Items.get(j);
+					if (!currentUnderItems.contains(itemToAdd)) {
+						currentUnderItems.add(itemToAdd);
+					}
+				}
+				System.out.println(currentLevel0Items);
+				System.out.println(underItems.toString());
+				System.out.println(currentUnderItems.toString());
+				underItems.addAll(currentUnderItems);
+			}
+			
+		
+			
+			//We need to get the last iteration result size for offset
+			offSet += currentUnderItems.size();
+			if (currentLevel0Items.size() <= 0) {
+				break;
+			}
+		}	
+		
+		System.out.println(underItems.toString());
+	}
+	
 	public static File extractDF(String outPath, String dfFilePath, int minFreq, int minConf) {
 		//Create the file
     	File dfFile = null;
@@ -77,56 +132,10 @@ public class Etape2 {
 						continue;
 					}
 					
-					level0Items.add(itemCharStr);
-					
+					level0Items.add(itemCharStr);			
 				}
 			}
 		
-			//This is all under non null item from item
-			ArrayList<String> underItems = new ArrayList<String>();
-			//We add the first level
-			underItems.addAll(level0Items);
-			//This is the underItems offset
-			int offSet = 0;
-			while (true) {
-				//Current underItem list
-				Collection<String> currentUnderItems = new ArrayList<String>();
-				
-				//Level 0 item that we need to add
-				ArrayList<String> currentLevel0Items = level0Items;
-				
-				//We build the new  level of under item
-				for (int i = 0; (i + offSet) < underItems.size(); ++i) {
-					//We delete the current Item content from current Level0 Items
-					for (int j = 0; j < underItems.get(i + offSet - 1).length(); ++j) {
-						String currentItem = "" + underItems.get(i).charAt(j);
-						currentLevel0Items.remove(currentItem);
-					}
-					
-					//If it's empty then we have finished for this under items level
-					if (currentLevel0Items.size() <= 0) {
-						break;
-					}
-					
-					//Now we can add each new under item from this last under Item level
-					for (int j = 0; j < currentLevel0Items.size(); ++j) {
-						currentUnderItems.add(underItems.get(i + offSet) + currentLevel0Items.get(j));
-					}
-					underItems.addAll(currentUnderItems);
-				}
-				
-				System.out.println(currentUnderItems.toString());
-				
-				//We need to get the last iteration result size for offset
-				offSet = currentUnderItems.size();
-				if (offSet <= 0) {
-					break;
-				}
-			}	
-			
-			for (String item : underItems) {
-				System.out.println(item);
-			}
 			
 			//ToDo : write inside dfFile
 			
