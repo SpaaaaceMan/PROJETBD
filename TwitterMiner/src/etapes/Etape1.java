@@ -22,7 +22,7 @@ public class Etape1 {
 	/**
      * Function to convert the CSV File to a Trans File for the apriori algorithim
      */
-    public static File convertToTrans(String transFilePath, String csvFilePath, String separator) {
+    public static ArrayList<String> convertToTrans(String transFilePath, String csvFilePath, String separator) {
     	//Create the file
     	File transFile = null;
     
@@ -33,6 +33,8 @@ public class Etape1 {
     	//Each CSV line
     	String line = "";
 
+    	ArrayList<String> wordReference = new ArrayList<String>();
+    	
     	try {
 
     		//Create the transFile
@@ -84,6 +86,7 @@ public class Etape1 {
 						++maxInt;
 						
 						referenceMap.put(currentLine.get(i), maxInt);
+						wordReference.add(currentLine.get(i));
 					}
 					//Then we get the corresponding Integer
 					resultLine.add(referenceMap.get(currentLine.get(i)).toString() + " ");
@@ -117,6 +120,17 @@ public class Etape1 {
 				}
 			}
 			
+			File wordReferenceFile = new File ("files/wordReference.txt");
+			
+			out.close();
+			out = new BufferedWriter(new FileWriter(wordReferenceFile));
+			
+			//Write the reference words to display in the IHM
+			for (String word : wordReference) {
+				out.write(word);
+				out.newLine();
+			}
+			
     	} 
     	catch (FileNotFoundException e) {
     		e.printStackTrace();
@@ -140,7 +154,7 @@ public class Etape1 {
 			}
     	}
     	System.out.println("Done");
-		return transFile;
+		return wordReference;
     }
 
     /**
