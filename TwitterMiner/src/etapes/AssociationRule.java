@@ -6,17 +6,27 @@ public class AssociationRule {
 	private Collection<String> leftValue;
 	private Collection<String> rightValue;
 	
-	private int frequency;
-	private int trust;
+	private double frequency;
+	private double trust;
 	
 	public AssociationRule(Collection<String> leftValue, Collection<String> rightValue, 
-			int frequency, int trust) {
+			double frequency, double trust) {
 		
 		this.leftValue  = leftValue;
 		this.rightValue = rightValue;
 		
 		this.frequency = frequency;
 		this.trust     = trust;
+	}
+	
+	public static AssociationRule[] createRules(){
+		Collection<String> testLeft = null;
+		Collection<String> testRight = null;
+		AssociationRule[] rules = new AssociationRule[]{
+                new AssociationRule(testLeft, testRight, 0.8, 0.5),
+                new AssociationRule(testLeft, testRight, 0.2, 0.3),
+        };
+		return rules;
 	}
 	
 	public Collection<String> getLeftValue() {
@@ -27,11 +37,11 @@ public class AssociationRule {
 		return rightValue;
 	}
 
-	public int getFrequency() {
+	public double getFrequency() {
 		return frequency;
 	}
 
-	public int getTrust() {
+	public double getTrust() {
 		return trust;
 	}
 

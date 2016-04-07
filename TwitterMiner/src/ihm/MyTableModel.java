@@ -8,7 +8,7 @@ import etapes.AssociationRule;
 public class MyTableModel extends AbstractTableModel {
 	private final AssociationRule[] rules;
  
-    private final String[] entetes = {"Règle d'association", "Fréquence", "Confiance"};
+    private final String[] entetes = {"Règles d'association", "Fréquence", "Confiance"};
  
     public MyTableModel(AssociationRule[] rules) {
         super();
