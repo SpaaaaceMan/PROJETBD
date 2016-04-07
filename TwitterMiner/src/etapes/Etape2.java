@@ -52,7 +52,7 @@ public class Etape2 {
 				
 				//Now we can add each new under item from this last under Item level
 				for (int j = 0; j < currentLevel0Items.size(); ++j) {
-					String itemToAdd = underItems.get(i + offSet) + "; " + currentLevel0Items.get(j);
+					String itemToAdd = "(" + underItems.get(i + offSet) + "; " + currentLevel0Items.get(j) + ")";
 					if (!currentUnderItems.contains(itemToAdd)) {
 						currentUnderItems.add(itemToAdd);
 					}

@@ -2,14 +2,38 @@ package etapes;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**This is an association rule. this represents stuff like X→Y
+ * 
+ * @author Thomas MEDARD, Kurt SAVIO, Julien TEULLE
+ *
+ */
 public class AssociationRule {
 
+	/**
+	 * The left item in the association rule (X)
+	 */
 	private Collection<String> leftValue;
+	/**
+	 * The right item in the association rule (Y) 
+	 */
 	private Collection<String> rightValue;
 	
+	/**
+	 * Its frequency
+	 */
 	private double frequency;
+	/**
+	 * Its trus
+	 */
 	private double trust;
 	
+	/**
+	 * The constructor
+	 * @param leftValue the left items (X).
+	 * @param rightValue the right items (Y)
+	 * @param frequency The frequency of this AssociationRule
+	 * @param trust The trust of this AssociationRule
+	 */
 	public AssociationRule(Collection<String> leftValue, Collection<String> rightValue, 
 			double frequency, double trust) {
 		
@@ -33,18 +57,34 @@ public class AssociationRule {
 		return rules;
 	}
 	
+	/**
+	 * The getter for the left item of this AssociationRule (X)
+	 * @return the left item of this Association Rule 
+	 */
 	public Collection<String> getLeftValue() {
 		return leftValue;
 	}
 
+	/**
+	 * The getter for the right item of this Association Rule (Y)
+	 * @return the getter for the right item
+	 */
 	public Collection<String> getRightValue() {
 		return rightValue;
 	}
 
+	/**
+	 * Get the frequency of this AssociationRule
+	 * @return the frequency of this AssociationRule
+	 */
 	public double getFrequency() {
 		return frequency;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public double getTrust() {
 		return trust;
 	}
