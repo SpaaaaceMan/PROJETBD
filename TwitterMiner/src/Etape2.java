@@ -13,7 +13,19 @@ import java.util.Map.Entry;
 
 public class Etape2 {
 	
-	public static Collection<String> getAllUnderItemSet (String itemSet) {
+	public static Collection<String> getAllUnderItemSet (Collection<String> itemSet) {
+		//This the Level 0 items
+		ArrayList<String> level0Items = new ArrayList<String>();
+		level0Items.addAll(itemSet);
+		
+		//Get all level 0 items from itemSet
+		/*for (int i = 0; i < itemSet.length(); ++i) {
+			String str = "" + itemSet.charAt(i);
+			level0Items.add(str);
+		}*/
+		
+		System.out.println("Level 0 " + level0Items);
+		
 		//This is all under non null item from item
 		ArrayList<String> underItems = new ArrayList<String>();
 		//We add the first level
@@ -22,7 +34,7 @@ public class Etape2 {
 		int offSet = 0;
 		while (true) {
 			//Current underItem list
-			Collection<String> currentUnderItems = null;
+			Collection<String> currentUnderItems = new ArrayList<String>();
 			
 			//Level 0 item that we need to add
 			ArrayList<String> currentLevel0Items = new ArrayList<String>();
@@ -34,7 +46,7 @@ public class Etape2 {
 				currentUnderItems = new ArrayList<String>();
 				//We delete the current Item content from current Level0 Items
 				for (int j = 0; j < underItems.get(i + offSet).length(); ++j) {
-					String currentItem = "" + underItems.get(i + offSet).charAt(j);
+					String currentItem = "" + underItems.get(i + offSet);
 					currentLevel0Items.remove(currentItem);
 				}
 				
@@ -45,18 +57,17 @@ public class Etape2 {
 				
 				//Now we can add each new under item from this last under Item level
 				for (int j = 0; j < currentLevel0Items.size(); ++j) {
-					String itemToAdd = underItems.get(i + offSet) + currentLevel0Items.get(j);
+					String itemToAdd = underItems.get(i + offSet) + " " + currentLevel0Items.get(j);
 					if (!currentUnderItems.contains(itemToAdd)) {
 						currentUnderItems.add(itemToAdd);
 					}
 				}
-				System.out.println(currentLevel0Items);
-				System.out.println(underItems.toString());
-				System.out.println(currentUnderItems.toString());
+				System.out.println("current Level 0 " + currentLevel0Items);
+				System.out.println("current Under Items " + currentUnderItems.toString());
+				System.out.println("under Items " + underItems.toString());
+				
 				underItems.addAll(currentUnderItems);
 			}
-			
-		
 			
 			//We need to get the last iteration result size for offset
 			offSet += currentUnderItems.size();
@@ -66,6 +77,7 @@ public class Etape2 {
 		}	
 		
 		System.out.println(underItems.toString());
+		return underItems;
 	}
 	
 	public static File extractDF(String outPath, String dfFilePath, int minFreq, int minConf) {
@@ -75,8 +87,6 @@ public class Etape2 {
     	//Initialize the Buffered Stuff
     	BufferedReader in  = null;
     	BufferedWriter out = null;
-    	
-		Collection<AssociationRule> result = new ArrayList<AssociationRule>();
     	
     	try {
 
@@ -91,10 +101,10 @@ public class Etape2 {
 			//All cvs lines
 			String outLine = "";
 			//This is all item set associated with there frequency
-			Map<String, Integer> itemSets = new HashMap<String, Integer>();
+			Map<String, Integer> itemSets = new HashMap<String, Integer>();		
 			//First we need to get all lines because we need to know them all
 			while ((outLine = in.readLine()) != null) {
-				
+				Collection<String> itemSet = new ArrayList<String>();
 				//Current item
 				String item = "";
 				//Current support
@@ -109,10 +119,11 @@ public class Etape2 {
 					}
 					else {
 						item += line;
+						itemSet.add(line);
 					}
 				}
 				itemSets.put(item, freq);
-				
+				getAllUnderItemSet(itemSet);
 			}
 			
 			//Then we can process them	
@@ -126,13 +137,7 @@ public class Etape2 {
 				//Get current item
 				Map.Entry<String, Integer> item = itemSetsIter.next();
 				for (int i = 0; i < item.getKey().length(); ++i) {
-					String itemCharStr = "" + item.getKey().charAt(i);
-					//We want only Level 0 item
-					if (level0Items.contains(itemCharStr)) {
-						continue;
-					}
-					
-					level0Items.add(itemCharStr);			
+					//getAllUnderItemSet(item.getKey());	
 				}
 			}
 		
