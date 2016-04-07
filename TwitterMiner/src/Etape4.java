@@ -3,22 +3,23 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 
 public class Etape4 {
 	
 	private JFrame fenetre;
-	private DefaultListModel<String> dlm = new DefaultListModel<String>();
-	private JList<String> liste = new JList<String>(dlm);
+	@SuppressWarnings("unused")
+	private TableModel dlm = new DefaultTableModel();	
+	private AssociationRule[] rules;
+	private JTable liste = new JTable(new MyTableModel(rules));
 	
 	public Etape4() {
 		fenetre = new JFrame("Règles d'associations");
@@ -40,13 +41,14 @@ public class Etape4 {
 		/*===LISTE DES RA===*/
 		JPanel panelList = new JPanel();
 		panelList.setLayout(new GridLayout());
+		liste.setAutoCreateRowSorter(true);
 		
-		for (int i = 0; i < 30; i++) {
-			dlm.addElement("élément " + (i + 1));
+		/*for (int i = 0; i < liste.getColumnCount(); i++) {
+			dlm.setValueAt("test", 1, i);
 		}
 		
-		DefaultListCellRenderer renderer =  (DefaultListCellRenderer)liste.getCellRenderer();  
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		/*DefaultListCellRenderer renderer =  (DefaultListCellRenderer)liste.getCellRenderer();  
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);*/
 		
 		panelList.add(new JScrollPane(liste));
 		panelList.setBorder(BorderFactory.createTitledBorder("Règles d'associations trouvées"));
@@ -62,10 +64,7 @@ public class Etape4 {
 	}
 
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		Etape4 etape = new Etape4();
-		//affiche les éléments de la liste
-		for (int i = 0; i < etape.dlm.getSize(); i++) {
-			System.out.println(etape.dlm.elementAt(i));
-		}
 	}
 }
