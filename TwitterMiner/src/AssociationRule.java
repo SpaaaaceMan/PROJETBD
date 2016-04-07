@@ -2,13 +2,13 @@ import java.util.Collection;
 
 public class AssociationRule {
 
-	private Collection<Integer> leftValue;
-	private Collection<Integer> rightValue;
+	private Collection<String> leftValue;
+	private Collection<String> rightValue;
 	
 	private int frequency;
 	private int trust;
 	
-	public AssociationRule(Collection<Integer> leftValue, Collection<Integer> rightValue, 
+	public AssociationRule(Collection<String> leftValue, Collection<String> rightValue, 
 			int frequency, int trust) {
 		
 		this.leftValue  = leftValue;
@@ -18,11 +18,11 @@ public class AssociationRule {
 		this.trust     = trust;
 	}
 	
-	public Collection<Integer> getLeftValue() {
+	public Collection<String> getLeftValue() {
 		return leftValue;
 	}
 
-	public Collection<Integer> getRightValue() {
+	public Collection<String> getRightValue() {
 		return rightValue;
 	}
 
@@ -38,11 +38,11 @@ public class AssociationRule {
 	public String toString() {
 		String str = "";
 		
-		for (Integer lValue : leftValue) {
+		for (String lValue : leftValue) {
 			str += lValue + ", ";
 		}
 		str += "→ ";
-		for (Integer rValue : rightValue) {
+		for (String rValue : rightValue) {
 			str += rValue + ", ";
 		}
 		

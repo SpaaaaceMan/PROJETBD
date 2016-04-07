@@ -51,7 +51,7 @@ public class Etape2 {
 				
 				//Now we can add each new under item from this last under Item level
 				for (int j = 0; j < currentLevel0Items.size(); ++j) {
-					String itemToAdd = underItems.get(i + offSet) + " " + currentLevel0Items.get(j);
+					String itemToAdd = underItems.get(i + offSet) + ", " + currentLevel0Items.get(j);
 					if (!currentUnderItems.contains(itemToAdd)) {
 						currentUnderItems.add(itemToAdd);
 					}
@@ -126,6 +126,8 @@ public class Etape2 {
 			System.out.println(itemSets);
 			System.out.println(underItemSets);
 			
+			//This is all kept association rules
+			ArrayList<AssociationRule> aR = new ArrayList<AssociationRule>(); 
 			
 			//Then we can process them and make the point 2
 			//We get the Iterator from underItemSets
@@ -137,9 +139,11 @@ public class Etape2 {
 				int itemFreq = itemSets.get(item);
 				
 				for (int i = 0; i < item.getValue().size(); ++i) {
-					/*if () {
-						
-					}*/
+					
+					int itemTrust = itemFreq / itemSets.get(item.getValue().get(i));
+					if (itemTrust >= minFreq) {
+						aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
+					}
 				}
 			}
 		
