@@ -17,7 +17,7 @@ public class Etape0 {
 		
 		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
 
-		int nbTwitt = 10001;
+		int nbTwitt = 10;
 		
 		System.out.println("Mot à rechercher : ");
 		
@@ -31,7 +31,12 @@ public class Etape0 {
 		
 		System.out.println("Recherche de " + nbTwitt + " tweet contenant : " + recherche);
 		
-		List<Map<String, String>> data = result.searchBy(recherche, nbTwitt);
+		List<Map<String, String>> data = null;
+		try {
+			data = result.searchBy(recherche, nbTwitt);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		int max = 0;
 		
