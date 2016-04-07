@@ -15,14 +15,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * 
+ * This the step to extract association rules from apriori result
  * @author Thomas MEDARD, Kurt SAVIO, Julien TEULLE
  *
  */
 public class Etape2 {
 	
 	/**
-	 * 
+	 * This will generate all under item sets from an item set
 	 * @param itemSet
 	 * @return
 	 */
