@@ -20,9 +20,9 @@ public class AssociationRule {
 		this.trust     = trust;
 	}
 	
-	@SuppressWarnings("null")
 	public static AssociationRule[] createRules(){
 		Collection<String> testLeft = new ArrayList<String>();
+		testLeft.add("yolo");
 		testLeft.add("yolo");
 		Collection<String> testRight = new ArrayList<String>();
 		testRight.add("swagg");
