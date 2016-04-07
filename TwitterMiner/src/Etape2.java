@@ -18,12 +18,6 @@ public class Etape2 {
 		ArrayList<String> level0Items = new ArrayList<String>();
 		level0Items.addAll(itemSet);
 		
-		//Get all level 0 items from itemSet
-		/*for (int i = 0; i < itemSet.length(); ++i) {
-			String str = "" + itemSet.charAt(i);
-			level0Items.add(str);
-		}*/
-		
 		System.out.println("Level 0 " + level0Items);
 		
 		//This is all under non null item from item
@@ -71,6 +65,13 @@ public class Etape2 {
 				break;
 			}
 		}	
+		
+		//The item set shouldn't be its own under item
+		if (itemSet.size() <= 1) {
+			for (String underItem : level0Items) {
+				underItems.remove(underItem);
+			}
+		}
 		
 		System.out.println("under Items" + underItems.toString());
 		return underItems;
@@ -127,16 +128,18 @@ public class Etape2 {
 			
 			
 			//Then we can process them and make the point 2
+			//We get the Iterator from underItemSets
 			Iterator<Entry<Collection<String>, ArrayList<String>>> itemSetsIter = underItemSets.entrySet().iterator();
 			while(itemSetsIter.hasNext()) {
 				//Get current itemSet
 				Entry<Collection<String>, ArrayList<String>> item = itemSetsIter.next();
+				
+				int itemFreq = itemSets.get(item);
+				
 				for (int i = 0; i < item.getValue().size(); ++i) {
-					ArrayList<String> currentUnderItem = new ArrayList<String>();
-					String[] underItems = item.getValue().get(i).split(" ");
-					for (int j = 0; j < underItems.length; ++j) {
-						currentUnderItem.add(underItems[j]);
-					}
+					/*if () {
+						
+					}*/
 				}
 			}
 		
