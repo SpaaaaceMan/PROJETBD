@@ -12,6 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * @author Thomas MEDARD, Kurt SAVIO, Julien TEULLE
+ *
+ */
 public class Etape1 {
 	
 	/**
@@ -138,6 +143,11 @@ public class Etape1 {
 		return transFile;
     }
 
+    /**
+     * This is the main for terminal use
+     * @param args termianl agruments. Should be : Etape1 <Trans file path(parent repositeray must exists)> <Csv file path (must exist)> <Csv separator(, or ; in most cases)>
+     * 
+     */
 	public static void main(String[] args) {
 		//We need all required arguments
 		if (args.length < 3) {

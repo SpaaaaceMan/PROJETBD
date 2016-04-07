@@ -14,8 +14,18 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * 
+ * @author Thomas MEDARD, Kurt SAVIO, Julien TEULLE
+ *
+ */
 public class Etape2 {
 	
+	/**
+	 * 
+	 * @param itemSet
+	 * @return
+	 */
 	public static ArrayList<String> getAllUnderItemSet (Collection<String> itemSet) {
 		//This the Level 0 items
 		ArrayList<String> level0Items = new ArrayList<String>();

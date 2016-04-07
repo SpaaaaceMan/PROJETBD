@@ -6,35 +6,26 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This will extract 10 000 Twitts
+ * @author Thomas MEDARD, Kurt SAVIO, Julien TEULLE
+ *
+ */
 public class Etape0 {
-
-	public static void main(String[] args){
-		
-		String FILE_NAME = "src/test.csv";
+	
+	/**This will extract nbTwitt Status from Twitter containing the word word
+	 * 
+	 */
+	public static void etape0 (String word, int nbTwitt) {
+		String FILE_NAME = "files/TwittsResults.csv";
 		File file = CSVFile.getResource(FILE_NAME);
 		CSVFile csvFile = new CSVFile(file, ';');
 		
 		TwitterHandler result = new TwitterHandler();
 		
-		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
-
-		int nbTwitt = 100;
-		
-		System.out.println("Mot à rechercher : ");
-		
-		String recherche = null;
-		try {
-			recherche = input.readLine();
-		} 
-		catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-		System.out.println("Recherche de " + nbTwitt + " tweet contenant : " + recherche);
-		
 		List<Map<String, String>> data = null;
 		try {
-			data = result.searchBy(recherche, nbTwitt);
+			data = result.searchBy(word, nbTwitt);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
@@ -76,6 +67,30 @@ public class Etape0 {
 		}
 		
 		System.out.println("Done! " + (data.size()-1) + " status get");
+	}
+	
+	/**
+	 * Main for terminal execution
+	 * @param args terminal arguements (no needs here)
+	 */
+	public static void main(String[] args){
+		
+		BufferedReader input = new BufferedReader (new InputStreamReader(System.in));
+		
+		int nbTwitt = 10001;
+		System.out.println("Word to look for : ");
+		
+		String recherche = null;
+		try {
+			recherche = input.readLine();
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		System.out.println("Searching " + nbTwitt + " twitter status containing : " + recherche);
+		
+		Etape0.etape0(recherche, nbTwitt);
 	}
 
 }
