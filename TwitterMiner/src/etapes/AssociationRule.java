@@ -63,7 +63,7 @@ public class AssociationRule {
 				str += lValue + ", ";
 			}
 			else {
-				str += lValue;
+				str += lValue + " ";
 			}
 			
 			++counter;
