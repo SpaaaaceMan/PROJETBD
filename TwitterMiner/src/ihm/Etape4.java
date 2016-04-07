@@ -1,3 +1,6 @@
+package ihm;
+import AssociationRule;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -42,14 +45,7 @@ public class Etape4 {
 		JPanel panelList = new JPanel();
 		panelList.setLayout(new GridLayout());
 		liste.setAutoCreateRowSorter(true);
-		
-		/*for (int i = 0; i < liste.getColumnCount(); i++) {
-			dlm.setValueAt("test", 1, i);
-		}
-		
-		/*DefaultListCellRenderer renderer =  (DefaultListCellRenderer)liste.getCellRenderer();  
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);*/
-		
+	
 		panelList.add(new JScrollPane(liste));
 		panelList.setBorder(BorderFactory.createTitledBorder("Règles d'associations trouvées"));
 		

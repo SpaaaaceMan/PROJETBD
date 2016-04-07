@@ -1,3 +1,6 @@
+package ihm;
+import AssociationRule;
+
 import javax.swing.table.AbstractTableModel;
 
 
