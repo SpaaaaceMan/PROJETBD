@@ -1,3 +1,4 @@
+package etapes;
 import java.util.Collection;
 
 public class AssociationRule {

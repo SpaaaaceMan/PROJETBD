@@ -1,6 +1,4 @@
 package ihm;
-import AssociationRule;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -14,6 +12,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import etapes.AssociationRule;
 
 
 public class Etape4 {
