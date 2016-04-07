@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 
 public class Etape2 {
 	
-	public static Collection<String> getAllUnderItemSet (Collection<String> itemSet) {
+	public static ArrayList<String> getAllUnderItemSet (Collection<String> itemSet) {
 		//This the Level 0 items
 		ArrayList<String> level0Items = new ArrayList<String>();
 		level0Items.addAll(itemSet);
@@ -61,11 +61,7 @@ public class Etape2 {
 					if (!currentUnderItems.contains(itemToAdd)) {
 						currentUnderItems.add(itemToAdd);
 					}
-				}
-				System.out.println("current Level 0 " + currentLevel0Items);
-				System.out.println("current Under Items " + currentUnderItems.toString());
-				System.out.println("under Items " + underItems.toString());
-				
+				}				
 				underItems.addAll(currentUnderItems);
 			}
 			
@@ -76,7 +72,7 @@ public class Etape2 {
 			}
 		}	
 		
-		System.out.println(underItems.toString());
+		System.out.println("under Items" + underItems.toString());
 		return underItems;
 	}
 	
@@ -101,12 +97,12 @@ public class Etape2 {
 			//All cvs lines
 			String outLine = "";
 			//This is all item set associated with there frequency
-			Map<String, Integer> itemSets = new HashMap<String, Integer>();		
+			Map<Collection<String>, Integer> itemSets = new HashMap<Collection<String>, Integer>();
+			//This all under item from a Set
+			Map<Collection<String>, ArrayList<String>> underItemSets = new HashMap<Collection<String>, ArrayList<String>>();
 			//First we need to get all lines because we need to know them all
 			while ((outLine = in.readLine()) != null) {
 				Collection<String> itemSet = new ArrayList<String>();
-				//Current item
-				String item = "";
 				//Current support
 				int freq = 0;
 				//Iterate into the line to get Y and its freq
@@ -118,26 +114,29 @@ public class Etape2 {
 						freq = Integer.parseInt(supportValue);
 					}
 					else {
-						item += line;
 						itemSet.add(line);
 					}
 				}
-				itemSets.put(item, freq);
-				getAllUnderItemSet(itemSet);
+				//We stock them and ther under item set Point 1
+				itemSets.put(itemSet, freq);
+				underItemSets.put(itemSet, getAllUnderItemSet(itemSet));
 			}
 			
-			//Then we can process them	
-			//Now we find all under set (sous-ensemble)
-			//For each item
-			Iterator<Entry<String, Integer>> itemSetsIter = itemSets.entrySet().iterator();
-			//This the Level 0 items
-			ArrayList<String> level0Items = new ArrayList<String>();
-			//We get all level 0 items
+			System.out.println(itemSets);
+			System.out.println(underItemSets);
+			
+			
+			//Then we can process them and make the point 2
+			Iterator<Entry<Collection<String>, ArrayList<String>>> itemSetsIter = underItemSets.entrySet().iterator();
 			while(itemSetsIter.hasNext()) {
-				//Get current item
-				Map.Entry<String, Integer> item = itemSetsIter.next();
-				for (int i = 0; i < item.getKey().length(); ++i) {
-					//getAllUnderItemSet(item.getKey());	
+				//Get current itemSet
+				Entry<Collection<String>, ArrayList<String>> item = itemSetsIter.next();
+				for (int i = 0; i < item.getValue().size(); ++i) {
+					ArrayList<String> currentUnderItem = new ArrayList<String>();
+					String[] underItems = item.getValue().get(i).split(" ");
+					for (int j = 0; j < underItems.length; ++j) {
+						currentUnderItem.add(underItems[j]);
+					}
 				}
 			}
 		
