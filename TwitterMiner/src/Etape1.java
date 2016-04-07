@@ -66,7 +66,7 @@ public class Etape1 {
 				
 				//Look in the current line
 				for (int i = 2; i < currentLine.size(); ++i) {
-					//Since we need an item Set, we ignore already processed words ine a status
+					//Since we need an item Set, we ignore already processed words in a status
 					if (status[i] == "" || resultLine.contains(referenceMap.get(currentLine.get(i)) + " ")) {
 						continue;
 					}

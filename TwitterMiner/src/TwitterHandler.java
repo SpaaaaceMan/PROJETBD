@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +77,7 @@ public class TwitterHandler {
 		}
 	}
 	
-	public List<Map<String, String>> searchBy (String recherche, int nbStatus) {
+	public List<Map<String, String>> searchBy (String recherche, int nbStatus) throws IOException {
 
 		long sinceId = 0l;
 		
@@ -84,7 +85,11 @@ public class TwitterHandler {
 		query.setCount(100);
 		int cpt = 0;
 		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
-		
+		ArrayList<String> motsInutiles = new ArrayList<String>();
+		Etape3 nettoyeur = new Etape3("files/motsinutiles.txt");
+		motsInutiles = nettoyeur.Nettoyage();
+		boolean inutile = false;
+		int motsEnMoins = 0;
 		try { 
 			while (cpt < nbStatus){
 
@@ -101,13 +106,30 @@ public class TwitterHandler {
 					String[] splitedText = status.getText().split(" ");
 					
 					for (int i = 0; i < splitedText.length; ++i) {
-						data.put("Word" + i, splitedText[i]);
+						
+						for (int j = 0; j < motsInutiles.size(); ++j){
+							
+							if (splitedText[i].equals(motsInutiles.get(j))){
+								motsEnMoins++;
+								inutile = true;
+								break;
+							}
+							
+						}
+						
+						if (!inutile){
+							data.put("Word" + i, splitedText[i]);
+						}
+						
+						inutile = false;
 						
 						if (i > max){
 							max = i;
 						}
 						
-					}					
+					}		
+					
+					//max -= motsEnMoins;
 					
 					data.put("Limite", String.valueOf(max));
 					
@@ -116,7 +138,6 @@ public class TwitterHandler {
 					System.out.println(status.getCreatedAt().toString() + 
 							    " @" + status.getUser().getScreenName() +
 							    " "  + status.getText());
-					System.out.println(cpt);
 					
 					if (nbStatus == cpt) {
 						break;
@@ -125,12 +146,9 @@ public class TwitterHandler {
 					cpt++;
 					
 					if (cpt % 100 == 0){
-						System.out.println(cpt);
 						break;
 					}
 				}
-				
-				System.out.println(cpt);
 				
 				if (cpt % 100 == 0) {	
 					// Sleep for 15 seconds = 60 requests per 15 minutes
