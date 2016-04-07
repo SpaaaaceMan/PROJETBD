@@ -10,8 +10,6 @@ public class Etape3 {
 	
 	private String file;
 	
-	
-
 	public Etape3(String file) {
 		this.file = file;
 	}
