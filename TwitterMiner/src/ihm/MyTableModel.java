@@ -1,6 +1,8 @@
 package ihm;
 import javax.swing.table.AbstractTableModel;
 
+import etapes.AssociationRule;
+
 
 @SuppressWarnings("serial")
 public class MyTableModel extends AbstractTableModel {
