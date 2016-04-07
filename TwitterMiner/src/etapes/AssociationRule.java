@@ -82,13 +82,16 @@ public class AssociationRule {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Get the Trust of this AssociationRule
+	 * @return the trust of this AssociationRule
 	 */
 	public double getTrust() {
 		return trust;
 	}
 
+	/**
+	 * This is to display this AssociationRule
+	 */
 	@Override
 	public String toString() {
 		//Final String to return
