@@ -185,8 +185,118 @@ public class Etape2 {
 			}
     	}
     	
-    	System.out.println("Done");
 		return dfFile;
+	}
+	
+	public static ArrayList<AssociationRule> getExtractDF(String outPath, String dfFilePath, int minFreq, int minConf) {
+		//Create the file
+    	File dfFile = null;
+    
+    	//Initialize the Buffered Stuff
+    	BufferedReader in  = null;
+    	BufferedWriter out = null;
+    	
+    	//This is all kept association rules
+		ArrayList<AssociationRule> aR = new ArrayList<AssociationRule>(); 
+    	
+    	try {
+
+    		//Create the dfFile
+    		dfFile = CSVFile.getResource(dfFilePath);
+    		//Create the new dfFile if it doesn't exist
+    		dfFile.createNewFile();
+    		
+    		//Read each line from the CSV
+			in = new BufferedReader(new FileReader(CSVFile.getResource(outPath)));
+			
+			//All cvs lines
+			String outLine = "";
+			//This is all item set associated with there frequency
+			Map<ArrayList<String>, Integer> itemSets = new HashMap<ArrayList<String>, Integer>();
+			//This all under item from a Set
+			Map<ArrayList<String>, ArrayList<String>> underItemSets = new HashMap<ArrayList<String>, ArrayList<String>>();
+			//First we need to get all lines because we need to know them all
+			while ((outLine = in.readLine()) != null) {
+				ArrayList<String> itemSet = new ArrayList<String>();
+				//Current support
+				int freq = 0;
+				//Iterate into the line to get Y and its freq
+				for (String line : outLine.split(" ")) {
+					
+					//If the first char is '(' then it's the support
+					if (line.charAt(0) == '(') {
+						String supportValue = "" + line.charAt(1);
+						freq = Integer.parseInt(supportValue);
+					}
+					else {
+						itemSet.add(line);
+					}
+				}
+				//We stock them and ther under item set Point 1
+				itemSets.put(itemSet, freq);
+				underItemSets.put(itemSet, getAllUnderItemSet(itemSet));
+			}
+			
+			//Then we can process them and make the point 2
+			//We get the Iterator from underItemSets
+			Iterator<Entry<ArrayList<String>, ArrayList<String>>> itemSetsIter = underItemSets.entrySet().iterator();
+			while(itemSetsIter.hasNext()) {
+				//Get current itemSet
+				Entry<ArrayList<String>, ArrayList<String>> item = itemSetsIter.next();
+				
+				double itemFreq = itemSets.get(item.getKey());
+				
+				for (int i = 0; i < item.getValue().size(); ++i) {
+					
+					ArrayList<String>currentItem = new ArrayList<String>();
+					
+					String[] strs = item.getValue().get(i).split("; ");
+					for (String str : strs) {
+						currentItem.add(str);
+					}
+					
+					if (itemSets.containsKey(currentItem)) {
+						double itemTrust = itemFreq / itemSets.get(currentItem);
+						if (itemTrust >= minFreq) {
+							aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
+						}
+					}					
+				}
+			}
+			//write inside dfFile
+			
+			//Creating the BufferedWriter on the trans file
+			out = new BufferedWriter(new FileWriter(dfFile));
+			
+			//Begin writing
+			for (AssociationRule ar : aR) {
+				out.write(ar.toString());
+				out.newLine();
+			}
+			
+    	} 
+    	catch (FileNotFoundException e) {
+    		e.printStackTrace();
+    	} 
+    	catch (IOException e) {
+    		e.printStackTrace();
+    	} 
+    	//Close the buffered Stuff
+    	finally {
+    		try {
+    			
+	    		if (in != null) {
+	    			in.close();		
+	    		}
+	    		if (out != null) {
+	    			out.close();
+	    		}
+    		}
+    		catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
+		return aR;
 	}
 	
 	public static ArrayList<AssociationRule> extractAllDf (String outPath) {
