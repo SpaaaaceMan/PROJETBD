@@ -47,16 +47,20 @@ public class AssociationRule {
 	public static AssociationRule[] createRules(){
 		Collection<String> testLeft = new ArrayList<String>();
 		testLeft.add("yolo");
-		testLeft.add("yolo");
 		Collection<String> testRight = new ArrayList<String>();
 		testRight.add("swagg");
+		
+		Collection<String> testLeft2 = new ArrayList<String>();
+		testLeft2.add("zut");
+		Collection<String> testRight2 = new ArrayList<String>();
+		testRight2.add("hello");
 		AssociationRule[] rules = new AssociationRule[]{
                 new AssociationRule(testLeft, testRight, 0.8, 0.5),
                 new AssociationRule(testLeft, testRight, 0.2, 0.3),
+                new AssociationRule(testLeft2, testRight2, 0.1, 0.9),
         };
 		return rules;
 	}
-	
 	/**
 	 * The getter for the left item of this AssociationRule (X)
 	 * @return the left item of this Association Rule 
