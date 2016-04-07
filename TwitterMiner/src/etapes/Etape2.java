@@ -51,7 +51,7 @@ public class Etape2 {
 				
 				//Now we can add each new under item from this last under Item level
 				for (int j = 0; j < currentLevel0Items.size(); ++j) {
-					String itemToAdd = underItems.get(i + offSet) + ", " + currentLevel0Items.get(j);
+					String itemToAdd = underItems.get(i + offSet) + "; " + currentLevel0Items.get(j);
 					if (!currentUnderItems.contains(itemToAdd)) {
 						currentUnderItems.add(itemToAdd);
 					}
@@ -96,12 +96,12 @@ public class Etape2 {
 			//All cvs lines
 			String outLine = "";
 			//This is all item set associated with there frequency
-			Map<Collection<String>, Integer> itemSets = new HashMap<Collection<String>, Integer>();
+			Map<ArrayList<String>, Integer> itemSets = new HashMap<ArrayList<String>, Integer>();
 			//This all under item from a Set
-			Map<Collection<String>, ArrayList<String>> underItemSets = new HashMap<Collection<String>, ArrayList<String>>();
+			Map<ArrayList<String>, ArrayList<String>> underItemSets = new HashMap<ArrayList<String>, ArrayList<String>>();
 			//First we need to get all lines because we need to know them all
 			while ((outLine = in.readLine()) != null) {
-				Collection<String> itemSet = new ArrayList<String>();
+				ArrayList<String> itemSet = new ArrayList<String>();
 				//Current support
 				int freq = 0;
 				//Iterate into the line to get Y and its freq
@@ -121,34 +121,35 @@ public class Etape2 {
 				underItemSets.put(itemSet, getAllUnderItemSet(itemSet));
 			}
 			
-			System.out.println(itemSets);
-			System.out.println(underItemSets);
-			
 			//This is all kept association rules
 			ArrayList<AssociationRule> aR = new ArrayList<AssociationRule>(); 
 			
 			//Then we can process them and make the point 2
 			//We get the Iterator from underItemSets
-			Iterator<Entry<Collection<String>, ArrayList<String>>> itemSetsIter = underItemSets.entrySet().iterator();
+			Iterator<Entry<ArrayList<String>, ArrayList<String>>> itemSetsIter = underItemSets.entrySet().iterator();
 			while(itemSetsIter.hasNext()) {
 				//Get current itemSet
-				Entry<Collection<String>, ArrayList<String>> item = itemSetsIter.next();
+				Entry<ArrayList<String>, ArrayList<String>> item = itemSetsIter.next();
 				
 				double itemFreq = itemSets.get(item.getKey());
 				
 				for (int i = 0; i < item.getValue().size(); ++i) {
 					
-					System.out.println("|" + item.getValue().get(i) + "|");
-					System.out.println(itemSets.get(item.getValue().get(i)));
+					ArrayList<String>currentItem = new ArrayList<String>();
 					
-					double itemTrust = itemFreq / itemSets.get(item.getValue().get(i));
-					if (itemTrust >= minFreq) {
-						aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
+					String[] strs = item.getValue().get(i).split("; ");
+					for (String str : strs) {
+						currentItem.add(str);
 					}
+					
+					if (itemSets.containsKey(currentItem)) {
+						double itemTrust = itemFreq / itemSets.get(currentItem);
+						if (itemTrust >= minFreq) {
+							aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
+						}
+					}					
 				}
 			}
-		
-			System.out.println(aR);
 			//ToDo : write inside dfFile
 			
     	} 
@@ -176,6 +177,98 @@ public class Etape2 {
     	
     	System.out.println("Done");
 		return dfFile;
+	}
+	
+	public static ArrayList<AssociationRule> extractAllDf (String outPath) {
+
+		//Initialize the Buffered Stuff
+    	BufferedReader in  = null;
+    	
+    	//This is all kept association rules
+		ArrayList<AssociationRule> aR = new ArrayList<AssociationRule>(); 
+    	
+    	try {
+
+    		
+    		//Read each line from the CSV
+			in = new BufferedReader(new FileReader(CSVFile.getResource(outPath)));
+			
+			//All cvs lines
+			String outLine = "";
+			//This is all item set associated with there frequency
+			Map<ArrayList<String>, Integer> itemSets = new HashMap<ArrayList<String>, Integer>();
+			//This all under item from a Set
+			Map<ArrayList<String>, ArrayList<String>> underItemSets = new HashMap<ArrayList<String>, ArrayList<String>>();
+			//First we need to get all lines because we need to know them all
+			while ((outLine = in.readLine()) != null) {
+				ArrayList<String> itemSet = new ArrayList<String>();
+				//Current support
+				int freq = 0;
+				//Iterate into the line to get Y and its freq
+				for (String line : outLine.split(" ")) {
+					
+					//If the first char is '(' then it's the support
+					if (line.charAt(0) == '(') {
+						String supportValue = "" + line.charAt(1);
+						freq = Integer.parseInt(supportValue);
+					}
+					else {
+						itemSet.add(line);
+					}
+				}
+				//We stock them and ther under item set Point 1
+				itemSets.put(itemSet, freq);
+				underItemSets.put(itemSet, getAllUnderItemSet(itemSet));
+			}
+			
+			//Then we can process them and make the point 2
+			//We get the Iterator from underItemSets
+			Iterator<Entry<ArrayList<String>, ArrayList<String>>> itemSetsIter = underItemSets.entrySet().iterator();
+			while(itemSetsIter.hasNext()) {
+				//Get current itemSet
+				Entry<ArrayList<String>, ArrayList<String>> item = itemSetsIter.next();
+				
+				double itemFreq = itemSets.get(item.getKey());
+				
+				for (int i = 0; i < item.getValue().size(); ++i) {
+					
+					ArrayList<String>currentItem = new ArrayList<String>();
+					
+					String[] strs = item.getValue().get(i).split("; ");
+					for (String str : strs) {
+						currentItem.add(str);
+					}
+					
+					if (itemSets.containsKey(currentItem)) {
+						double itemTrust = itemFreq / itemSets.get(currentItem);
+						aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
+					}					
+				}
+			}
+			//ToDo : write inside dfFile
+			
+    	} 
+    	catch (FileNotFoundException e) {
+    		e.printStackTrace();
+    	} 
+    	catch (IOException e) {
+    		e.printStackTrace();
+    	} 
+    	//Close the buffered Stuff
+    	finally {
+    		try {
+    			
+	    		if (in != null) {
+	    			in.close();		
+	    		}
+    		}
+    		catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
+    	
+    	System.out.println("Done");
+		return aR;
 	}
 
 	public static void main(String[] args) {
