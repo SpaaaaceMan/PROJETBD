@@ -73,7 +73,7 @@ public class AssociationRule {
 		
 		//Right value
 		for (String rValue : rightValue) {
-			if (ct != leftValue.size() - 1) {
+			if (ct != rightValue.size() - 1) {
 				str += rValue + ", ";
 			}
 			else {
