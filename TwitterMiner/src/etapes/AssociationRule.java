@@ -1,4 +1,5 @@
 package etapes;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class AssociationRule {
@@ -19,9 +20,12 @@ public class AssociationRule {
 		this.trust     = trust;
 	}
 	
+	@SuppressWarnings("null")
 	public static AssociationRule[] createRules(){
-		Collection<String> testLeft = null;
-		Collection<String> testRight = null;
+		Collection<String> testLeft = new ArrayList<String>();
+		testLeft.add("yolo");
+		Collection<String> testRight = new ArrayList<String>();
+		testRight.add("swagg");
 		AssociationRule[] rules = new AssociationRule[]{
                 new AssociationRule(testLeft, testRight, 0.8, 0.5),
                 new AssociationRule(testLeft, testRight, 0.2, 0.3),

@@ -21,7 +21,7 @@ public class Etape4 {
 	private JFrame fenetre;
 	@SuppressWarnings("unused")
 	private TableModel dlm = new DefaultTableModel();	
-	private AssociationRule[] rules;
+	private AssociationRule[] rules = AssociationRule.createRules();
 	private JTable liste = new JTable(new MyTableModel(rules));
 	
 	public Etape4() {
