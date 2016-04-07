@@ -2,6 +2,8 @@ package ihm;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -35,6 +37,16 @@ public class Etape4 {
 		searchBar.setPreferredSize(new Dimension(300, 30));
 		
 		JButton searchButton = new JButton("Search");
+		searchButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (searchBar.getText().isEmpty())
+					System.out.println("champ vide");
+				else
+					search(searchBar.getText());
+			}
+		});
 		
 		panelSearch.add(searchBar, BorderLayout.CENTER);
 		panelSearch.add(searchButton, BorderLayout.EAST);
@@ -57,6 +69,15 @@ public class Etape4 {
         fenetre.pack();
 		fenetre.setLocationRelativeTo(null);
 		fenetre.setVisible(true);
+	}
+	
+	public void search (String motifs){
+		for(int i = 0; i < liste.getRowCount(); ++i){
+			if (liste.getValueAt(i, 0).toString().contains(motifs)){
+				System.out.println("trouvé");
+				liste.getSelectionModel().addSelectionInterval(i, i); 
+			}
+		}
 	}
 
 	public static void main(String[] args) {

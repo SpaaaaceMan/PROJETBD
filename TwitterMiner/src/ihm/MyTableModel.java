@@ -20,6 +20,7 @@ public class MyTableModel extends AbstractTableModel {
     }
  
     public int getColumnCount() {
+        System.out.println("entete : " + entetes.length);
         return entetes.length;
     }
  
