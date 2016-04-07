@@ -51,14 +51,34 @@ public class AssociationRule {
 
 	@Override
 	public String toString() {
+		//Final String to return
 		String str = "";
 		
+		//Counter
+		int ct = 0;
+		//Left value
 		for (String lValue : leftValue) {
-			str += lValue + ", ";
+			if (ct != leftValue.size() - 1) {
+				str += lValue + ", ";
+			}
+			else {
+				str += lValue;
+			}
 		}
+		
+		ct = 0;
+		
+		//Asscotiation rule character
 		str += "→ ";
+		
+		//Right value
 		for (String rValue : rightValue) {
-			str += rValue + ", ";
+			if (ct != leftValue.size() - 1) {
+				str += rValue + ", ";
+			}
+			else {
+				str += rValue;
+			}
 		}
 		
 		return str;

@@ -1,4 +1,5 @@
 package etapes;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,8 +19,6 @@ public class Etape2 {
 		//This the Level 0 items
 		ArrayList<String> level0Items = new ArrayList<String>();
 		level0Items.addAll(itemSet);
-		
-		System.out.println("Level 0 " + level0Items);
 		
 		//This is all under non null item from item
 		ArrayList<String> underItems = new ArrayList<String>();
@@ -73,8 +72,6 @@ public class Etape2 {
 				underItems.remove(underItem);
 			}
 		}
-		
-		System.out.println("under Items" + underItems.toString());
 		return underItems;
 	}
 	
@@ -137,18 +134,20 @@ public class Etape2 {
 				//Get current itemSet
 				Entry<Collection<String>, ArrayList<String>> item = itemSetsIter.next();
 				
-				int itemFreq = itemSets.get(item);
+				double itemFreq = itemSets.get(item.getKey());
 				
 				for (int i = 0; i < item.getValue().size(); ++i) {
 					
-					int itemTrust = itemFreq / itemSets.get(item.getValue().get(i));
+					System.out.println("|" + item.getValue().get(i) + "|");
+					System.out.println(itemSets.get(item.getValue().get(i)));
+					double itemTrust = itemFreq / itemSets.get(item.getValue().get(i));
 					if (itemTrust >= minFreq) {
 						aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
 					}
 				}
 			}
 		
-			
+			System.out.println(aR);
 			//ToDo : write inside dfFile
 			
     	} 
@@ -189,3 +188,4 @@ public class Etape2 {
 	}
 
 }
+
