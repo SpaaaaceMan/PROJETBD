@@ -55,30 +55,35 @@ public class AssociationRule {
 		String str = "";
 		
 		//Counter
-		int ct = 0;
+		int counter = 0;
+		
 		//Left value
 		for (String lValue : leftValue) {
-			if (ct != leftValue.size() - 1) {
+			if (counter != leftValue.size() - 1) {
 				str += lValue + ", ";
 			}
 			else {
 				str += lValue;
 			}
+			
+			++counter;
 		}
 		
-		ct = 0;
+		counter = 0;
 		
 		//Asscotiation rule character
 		str += "→ ";
 		
 		//Right value
 		for (String rValue : rightValue) {
-			if (ct != rightValue.size() - 1) {
+			if (counter != rightValue.size() - 1) {
 				str += rValue + ", ";
 			}
 			else {
 				str += rValue;
 			}
+			
+			++counter;
 		}
 		
 		return str;

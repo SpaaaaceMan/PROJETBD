@@ -140,6 +140,7 @@ public class Etape2 {
 					
 					System.out.println("|" + item.getValue().get(i) + "|");
 					System.out.println(itemSets.get(item.getValue().get(i)));
+					
 					double itemTrust = itemFreq / itemSets.get(item.getValue().get(i));
 					if (itemTrust >= minFreq) {
 						aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
