@@ -72,6 +72,7 @@ public class Etape2 {
 			
 			//We need to get the last iteration result size for offset
 			offSet += currentUnderItems.size();
+			//If we found nothing, then we have finished
 			if (currentLevel0Items.size() <= 0) {
 				break;
 			}
@@ -79,11 +80,14 @@ public class Etape2 {
 		
 		//The item set shouldn't be its own under item
 		if (itemSet.size() <= 1) {
-			for (String underItem : level0Items) {
+			for (String underItem : itemSet) {
 				underItems.remove(underItem);
 			}
 		}
+		//System.out.println(itemSet);
+		//System.out.println(underItems);
 		return underItems;
+		
 	}
 	
 	public static File extractDF(String outPath, String dfFilePath, int minFreq, int minConf) {
@@ -145,7 +149,7 @@ public class Etape2 {
 						itemSet.add("unreferenced word");
 					}
 				}
-				//We stock them and ther under item set Point 1
+				//We stock them and there under item set Point 1
 				itemSets.put(itemSet, freq);
 				underItemSets.put(itemSet, getAllUnderItemSet(itemSet));
 			}
@@ -247,7 +251,6 @@ public class Etape2 {
 			//All words reference
 			ArrayList<String> wordsReference = new ArrayList<String>();
 			//Reading from files/wordReference.txt
-			System.out.println("Reading from wordReference");
 			while ((correspondingWord = inWords.readLine()) != null) {
 				wordsReference.add(correspondingWord);
 			}
