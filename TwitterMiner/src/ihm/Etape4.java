@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import etapes.AssociationRule;
+import etapes.Etape2;
 
 
 public class Etape4 {
@@ -23,10 +25,19 @@ public class Etape4 {
 	private JFrame fenetre;
 	@SuppressWarnings("unused")
 	private TableModel dlm = new DefaultTableModel();	
-	private AssociationRule[] rules = AssociationRule.createRules();
-	private JTable liste = new JTable(new MyTableModel(rules));
+	//private AssociationRule[] rules = AssociationRule.createRules();
+	private AssociationRule[] rules; 
+	private JTable liste;
 	
 	public Etape4() {
+		
+		/*===ASSOCIATION RULES===*/
+		ArrayList<AssociationRule> step2Res = Etape2.getExtractDF("files/AprioriRes.out", "files/IHMDFs.txt", 5, 5);
+		rules =  new AssociationRule[step2Res.size()];
+		rules = step2Res.toArray(rules);
+		
+		liste = new JTable(new MyTableModel(rules));
+		
 		fenetre = new JFrame("Règles d'associations");
 		
 		/*===BARRE DE RECHERCHE===*/
@@ -81,6 +92,6 @@ public class Etape4 {
 	}
 
 	public static void main(String[] args) {
-		new Etape4();
+		 new Etape4();
 	}
 }
