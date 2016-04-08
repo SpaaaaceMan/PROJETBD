@@ -81,7 +81,6 @@ public class Etape4 {
 	}
 
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		Etape4 etape = new Etape4();
+		new Etape4();
 	}
 }

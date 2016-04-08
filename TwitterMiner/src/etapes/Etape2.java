@@ -92,6 +92,7 @@ public class Etape2 {
     
     	//Initialize the Buffered Stuff
     	BufferedReader in  = null;
+    	BufferedReader inWords = null;
     	BufferedWriter out = null;
     	
     	try {
@@ -103,14 +104,28 @@ public class Etape2 {
     		
     		//Read each line from the CSV
 			in = new BufferedReader(new FileReader(CSVFile.getResource(outPath)));
+			//Read from wordReference.txt
+			inWords = new BufferedReader (new FileReader(CSVFile.getResource("files/wordReference.txt")));
 			
-			//All cvs lines
-			String outLine = "";
+			//corresponding word
+			String correspondingWord = "";
+			//All words reference
+			ArrayList<String> wordsReference = new ArrayList<String>();
+			//Reading from files/wordReference.txt
+			System.out.println("Reading from wordReference");
+			while ((correspondingWord = inWords.readLine()) != null) {
+				wordsReference.add(correspondingWord);
+			}
+			
+			//All .out lines
+			String outLine = "";	
 			//This is all item set associated with there frequency
 			Map<ArrayList<String>, Integer> itemSets = new HashMap<ArrayList<String>, Integer>();
 			//This all under item from a Set
 			Map<ArrayList<String>, ArrayList<String>> underItemSets = new HashMap<ArrayList<String>, ArrayList<String>>();
 			//First we need to get all lines because we need to know them all
+			
+			System.out.println("Reading from files");
 			while ((outLine = in.readLine()) != null) {
 				ArrayList<String> itemSet = new ArrayList<String>();
 				//Current support
@@ -123,8 +138,11 @@ public class Etape2 {
 						String supportValue = "" + line.charAt(1);
 						freq = Integer.parseInt(supportValue);
 					}
+					else if (Integer.parseInt(line) < wordsReference.size()){
+						itemSet.add(wordsReference.get(Integer.parseInt(line)));
+					}
 					else {
-						itemSet.add(line);
+						itemSet.add("unreferenced word");
 					}
 				}
 				//We stock them and ther under item set Point 1
@@ -156,7 +174,9 @@ public class Etape2 {
 					if (itemSets.containsKey(currentItem)) {
 						double itemTrust = itemFreq / itemSets.get(currentItem);
 						if (itemTrust >= minFreq) {
-							aR.add(new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust));
+							AssociationRule currentAR = new AssociationRule(item.getKey(), item.getValue(), itemFreq, itemTrust);
+							aR.add(currentAR);
+							System.out.println(currentAR);
 						}
 					}					
 				}
@@ -171,6 +191,8 @@ public class Etape2 {
 				out.write(ar.toString());
 				out.newLine();
 			}
+			
+			System.out.println("done");
 			
     	} 
     	catch (FileNotFoundException e) {
@@ -204,6 +226,7 @@ public class Etape2 {
     
     	//Initialize the Buffered Stuff
     	BufferedReader in  = null;
+    	BufferedReader inWords = null;
     	BufferedWriter out = null;
     	
     	//This is all kept association rules
@@ -216,6 +239,19 @@ public class Etape2 {
     		//Create the new dfFile if it doesn't exist
     		dfFile.createNewFile();
     		
+    		//Read from wordReference.txt
+			inWords = new BufferedReader (new FileReader(CSVFile.getResource("files/wordReference.txt")));
+			
+			//corresponding word
+			String correspondingWord = "";
+			//All words reference
+			ArrayList<String> wordsReference = new ArrayList<String>();
+			//Reading from files/wordReference.txt
+			System.out.println("Reading from wordReference");
+			while ((correspondingWord = inWords.readLine()) != null) {
+				wordsReference.add(correspondingWord);
+			}
+			
     		//Read each line from the CSV
 			in = new BufferedReader(new FileReader(CSVFile.getResource(outPath)));
 			
@@ -238,8 +274,11 @@ public class Etape2 {
 						String supportValue = "" + line.charAt(1);
 						freq = Integer.parseInt(supportValue);
 					}
+					else if (Integer.parseInt(line) < wordsReference.size()){
+						itemSet.add(wordsReference.get(Integer.parseInt(line)));
+					}
 					else {
-						itemSet.add(line);
+						itemSet.add("unreferenced word");
 					}
 				}
 				//We stock them and ther under item set Point 1
@@ -313,12 +352,25 @@ public class Etape2 {
 
 		//Initialize the Buffered Stuff
     	BufferedReader in  = null;
+    	BufferedReader inWords = null;
     	
     	//This is all kept association rules
 		ArrayList<AssociationRule> aR = new ArrayList<AssociationRule>(); 
     	
     	try {
 
+    		//Read from wordReference.txt
+			inWords = new BufferedReader (new FileReader(CSVFile.getResource("files/wordReference.txt")));
+			
+			//corresponding word
+			String correspondingWord = "";
+			//All words reference
+			ArrayList<String> wordsReference = new ArrayList<String>();
+			//Reading from files/wordReference.txt
+			System.out.println("Reading from wordReference");
+			while ((correspondingWord = inWords.readLine()) != null) {
+				wordsReference.add(correspondingWord);
+			}
     		
     		//Read each line from the CSV
 			in = new BufferedReader(new FileReader(CSVFile.getResource(outPath)));
@@ -342,8 +394,11 @@ public class Etape2 {
 						String supportValue = "" + line.charAt(1);
 						freq = Integer.parseInt(supportValue);
 					}
+					else if (Integer.parseInt(line) < wordsReference.size()){
+						itemSet.add(wordsReference.get(Integer.parseInt(line)));
+					}
 					else {
-						itemSet.add(line);
+						itemSet.add("unreferenced word");
 					}
 				}
 				//We stock them and ther under item set Point 1
