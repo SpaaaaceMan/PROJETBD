@@ -8,8 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**The class to read from a .trans 
+ * @author Thomas
+ * 
+ */
 public class ReadTrans {
 	
+	/**Function to convert .trans file to .csv file
+	 * @param transFilePath The .trans file path
+	 * @param csvFilePath The .csv file path
+	 */
 	public static void convertTransToCsv(String transFilePath, String csvFilePath) {
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(transFilePath)))
@@ -59,6 +67,9 @@ public class ReadTrans {
 		} 
 	}
 
+	/**The function executed from terminal execution
+	 * @param args ReadTrans <Trans file file path (must exist)> <Csv path(parent repositeray must exists)>
+	 */
 	public static void main(String[] args) {
 		if (args.length < 2) {
 			System.out.println("error : not enough arguments. Usage : ReadTrans <Trans file file path (must exist)>" +

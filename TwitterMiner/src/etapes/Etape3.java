@@ -1,28 +1,62 @@
 package etapes;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**This is the step 3 of the project
+ * @author Thomas
+ *
+ */
 public class Etape3 {
 	
+	/**the file
+	 * 
+	 */
 	private String file;
 	
+	/**The constructor
+	 * @param file The file path
+	 */
 	public Etape3(String file) {
 		this.file = file;
 	}
 
+	/**Get all useless words from the file
+	 * @return The useless words found
+	 * @throws IOException some File exceptions
+	 */
 	public ArrayList<String> Nettoyage () throws IOException{
+		
 		ArrayList<String> motsInutiles = new ArrayList<String>();
 		String currentLine = new String();
-		BufferedReader readFile = new BufferedReader (new FileReader(this.file));
-		while ((currentLine = readFile.readLine()) != null){
-			motsInutiles.add(currentLine);
+		BufferedReader readFile = null;
+		try {
+			readFile = new BufferedReader (new FileReader(this.file));
+			while ((currentLine = readFile.readLine()) != null){
+				motsInutiles.add(currentLine);
+			}		
 		}
+		catch (IOException e) {
+    		e.printStackTrace();
+    	} 
+    	finally {
+    		try {
+	    		if (readFile != null) {
+	    			readFile.close();		
+	    		}
+    		}
+    		catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
+		
 		return motsInutiles;
 	}
 	
+	/**Main function for this step
+	 * @param rules the AssociationRule
+	 */
 	public void bestLift(ArrayList<AssociationRule> rules){
 		String[] rule = new String[rules.size()];
 		Double[] bests = new Double[rules.size()];
@@ -48,7 +82,7 @@ public class Etape3 {
 				}
 			}
 		}
-		System.out.println("Voici les 10 meilleurs rÃ¨gles vis Ã  vis du Lift : ");
+		System.out.println("Voici les 10 meilleurs règles vis à vis du Lift : ");
 		for (int i = 0; i < 10; ++i){
 			System.out.print(rule[(rule.length-1) - i] + " : ");
 			System.out.println(bests[(bests.length-1) - i]);
@@ -56,7 +90,11 @@ public class Etape3 {
 		}
 	}
 	
+	/**The function executed from terminal execution
+	 * @param args no arguments needed
+	 */
 	public static void main(String[] args){
+		
 		Etape3 lift = new Etape3("files/motsinutiles");
 		ArrayList<AssociationRule> rules = new ArrayList<AssociationRule>();
 		rules = Etape2.extractAllDf("Apriori/test.out");

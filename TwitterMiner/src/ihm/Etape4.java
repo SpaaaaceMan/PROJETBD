@@ -15,22 +15,34 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import etapes.AssociationRule;
 import etapes.Etape2;
 
 
+/**The step 4 of the project
+ * @author Thomas
+ *
+ */
 public class Etape4 {
 	
+	/**The main window
+	 * 
+	 */
 	private JFrame fenetre;
-	@SuppressWarnings("unused")
-	private TableModel dlm = new DefaultTableModel();	
+	
 	//private AssociationRule[] rules = AssociationRule.createRules();
+	/**
+	 * The AssociationRule to display
+	 */
 	private AssociationRule[] rules; 
+	/**
+	 * The main table
+	 */
 	private JTable liste;
 	
+	/**
+	 * The constructor of the window
+	 */
 	public Etape4() {
 		
 		/*===ASSOCIATION RULES===*/
@@ -54,10 +66,12 @@ public class Etape4 {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (searchBar.getText().isEmpty())
-					System.out.println("champ vide");
-				else
+				if (searchBar.getText().isEmpty()){
+					//System.out.println("champ vide");
+				}
+				else {
 					search(searchBar.getText());
+				}
 			}
 		});
 		
@@ -97,16 +111,22 @@ public class Etape4 {
 		fenetre.setVisible(true);
 	}
 	
+	/**Function to search a word inside the results
+	 * @param motifs The word to look for
+	 */
 	public void search (String motifs){
 		liste.clearSelection();
 		for(int i = 0; i < liste.getRowCount(); ++i){
 			if (liste.getValueAt(i, 0).toString().contains(motifs)){
-				System.out.println("trouvé");
+				//System.out.println("trouvé");
 				liste.getSelectionModel().addSelectionInterval(i, i); 
 			}
 		}
 	}
 
+	/**The function executed from terminal execution
+	 * @param args no arguments needed
+	 */
 	public static void main(String[] args) {
 		 new Etape4();
 	}
