@@ -13,8 +13,10 @@ import java.util.Map;
  */
 public class Etape0 {
 	
-	/**This will extract nbTwitt Status from Twitter containing the word word
-	 * 
+	/**
+	 * This will extract nbTwitt Status from Twitter containing the word word
+	 * @param word The word contained inside the status
+	 * @param nbTwitt The number of status to get
 	 */
 	public static void etape0 (String word, int nbTwitt) {
 		String FILE_NAME = "files/TwittsResults.csv";

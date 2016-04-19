@@ -44,6 +44,9 @@ public class AssociationRule {
 		this.trust     = trust;
 	}
 	
+	/**This is a test function to test this class
+	 * @return the test AssociationRule
+	 */
 	public static AssociationRule[] createRules(){
 		Collection<String> testLeft = new ArrayList<String>();
 		testLeft.add("yolo");

@@ -12,11 +12,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**This is the class for the CSVFile. An interesting upgrade would be to extend it from File
+ * @author Thomas
+ *
+ */
 public class CSVFile {
 
+	/**
+	 * The File to interact with
+	 */
 	private File file;
+	
+    /**
+     * The char to separate words inside the CSV File.
+     */
     private char separator;
     
+    /**The constructor.
+     * @param file The File to use. It has to be initialized. Idea : extends File to get ride of the File attribute
+     * @param separator The char used to separate words inside the CSV File.
+     */
     public CSVFile(File file, char separator) {
         if (file == null) 
             throw new IllegalArgumentException("Le fichier ne peut pas etre nul");
@@ -24,6 +39,11 @@ public class CSVFile {
         this.separator = separator;
     }
     
+    /**The function to write all lines inside the CSV.
+     * @param mappedData The data mapped correctly, see result form {@link Etape0#etape0(String, int)}
+     * @param titles The titles wich will be at the first line. There should be as many titles as cell (like the length)
+     * @throws IOException some Exception from File class
+     */
     public void write(List<Map<String, String>> mappedData, String[] titles) throws IOException {
     	
         if (mappedData == null) 
@@ -36,8 +56,8 @@ public class CSVFile {
         
 		try {
 			fw = new FileWriter(file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -90,6 +110,11 @@ public class CSVFile {
         fw.close();
     }
     
+    /**This write the .trans file, like the write function, but for the apriori algorithm.
+     * @param mappedData The data mapped correctly, see result form {@link Etape0#etape0(String, int)}
+     * @param titles The titles which will be at the first line. There should be as many titles as cell (like the length)
+     * @throws IOException some Exception from File class
+     */
     public void writeTrans(List<Map<String, String>> mappedData, ArrayList<String> titles) throws IOException {
     	
         if (mappedData == null) 
@@ -102,8 +127,8 @@ public class CSVFile {
         
 		try {
 			fw = new FileWriter(file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -150,18 +175,31 @@ public class CSVFile {
         fw.close();
     }
     
+    /**This function is very useful (so much that it should be in an FileUtility class). It get the absolute file name.
+     * @param fileName The relative file name
+     * @return The absolute file name
+     */
     public static String getResourcePath(String fileName) {
         final File f = new File("");
         final String dossierPath = f.getAbsolutePath() + File.separator + fileName;
         return dossierPath;
     }
     
+    /**This function is very useful (so much that it should be in an FileUtility class). It get the File object from the relative file name.
+     * @param fileName The relative file name
+     * @return The File object
+     */
     public static File getResource(String fileName) {
         final String completeFileName = getResourcePath(fileName);
         File file = new File(completeFileName);
         return file;
     }
     
+    /**This is the function to add the '"' around words in the CSV file. 
+     * @param value the line
+     * @param bw The BufferedWriter linked to the CSV file to write into.
+     * @throws IOException some Exception from File class
+     */
     private void write(String value, BufferedWriter bw) throws IOException {
         if (value == null)
             value = "";
@@ -185,6 +223,9 @@ public class CSVFile {
         bw.write(value);
     }
     
+    /** This is to create test mapped data. Unused and should be remove
+     * @return test mapped data
+     */
     @SuppressWarnings("unused")
 	private List<Map<String, String>> createMap() {
 
@@ -207,12 +248,13 @@ public class CSVFile {
         return data;
     }
     
+    /**Convert this CSV file into a .trans file for apriori processing.
+     * @return The File object to the .trans file
+     */
     public File convertToTrans() {
     	File Transfile = new File (this.file.getAbsolutePath());
     
     	BufferedReader in  = null;
-    	@SuppressWarnings("unused")
-		BufferedWriter out = null;
     	
     	String line = "";
 
@@ -220,11 +262,8 @@ public class CSVFile {
 
 			in = new BufferedReader(new FileReader(this.file));
 			while ((line = in.readLine()) != null) {
-		
-				@SuppressWarnings("unused")
-				List<String> referenceArray = new ArrayList<String>();
 				
-			    // use comma as separator
+			    // use this separator as separator
 				String[] status = line.split(Character.toString(this.separator));
 				List<String> currentLine = new ArrayList<String>();
 				
