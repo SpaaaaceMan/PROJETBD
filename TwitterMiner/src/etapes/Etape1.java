@@ -12,15 +12,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 
+/**This is step1 of the project : create a .trans file for apriori algorithm processing
  * @author Thomas MEDARD, Kurt SAVIO, Julien TEULLE
- *
  */
 public class Etape1 {
 	
 	/**
-     * Function to convert the CSV File to a Trans File for the apriori algorithim
+     * Function to convert the CSV File to a .trans File for the apriori algorithm
+	 * @param transFilePath The path to .trans file
+	 * @param csvFilePath the path to the .csv file
+	 * @param separator the separator
+	 * @return The data written inside the .trans file
      */
     public static ArrayList<String> convertToTrans(String transFilePath, String csvFilePath, String separator) {
     	//Create the file
@@ -39,7 +41,7 @@ public class Etape1 {
 
     		//Create the transFile
     		transFile = CSVFile.getResource(transFilePath);
-    		//Create the new transfile if it doesn't exist
+    		//Create the new .trans file if it doesn't exist
     		transFile.createNewFile();
     		
     		//Read each line from the CSV

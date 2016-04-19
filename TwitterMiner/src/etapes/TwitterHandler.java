@@ -15,15 +15,40 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 
+/**This is the object to use twiter4j API.
+ * @author Thomas
+ *
+ */
 public class TwitterHandler {
 	
+	/**
+	 * The OAuthConsumerKey
+	 */
 	private String OAuthConsumerKey;
+	/**
+	 * The OAuthConsumerSecret (it shouldn't be appearing somewhere but well...)
+	 */
 	private String OAuthConsumerSecret;
+	/**
+	 * The OAuthAccessToken
+	 */
 	private String OAuthAccessToken;
+	/**
+	 * The OAuthAccessTokenSecret (it shouldn't be appearing somewhere but well...)
+	 */
 	private String OAuthAccessTokenSecret;
 	
+	/**The twitter object
+	 * 
+	 */
 	private Twitter twitter;
 	
+	/**The constructor with keys provided
+	 * @param OAuthConsumerKey OAuthConsumerKey
+	 * @param OAuthConsumerSecret OAuthConsumerSecret (it shouldn't be appearing somewhere but well...)
+	 * @param OAuthAccessToken OAuthAccessToken
+	 * @param OAuthAccessTokenSecret OAuthAccessTokenSecret (it shouldn't be appearing somewhere but well...)
+	 */
 	public TwitterHandler (String OAuthConsumerKey, String OAuthConsumerSecret
 			, String OAuthAccessToken, String OAuthAccessTokenSecret) {
 		
@@ -36,6 +61,9 @@ public class TwitterHandler {
 		
 	}
 	
+	/**The default constructor with my own keys provided.
+	 * 
+	 */
 	public TwitterHandler () {
 		
 		this.OAuthConsumerKey       = "lTaMcd8utKwMCXbBTyNqsgZsz";
@@ -46,6 +74,9 @@ public class TwitterHandler {
 		connect ();
 	}
 	
+	/**The function to connect to the twitter API
+	 * @return true if succeeded, false otherwise.
+	 */
 	private Boolean connect () {
 		System.out.println("Connection...");
 		
@@ -65,6 +96,9 @@ public class TwitterHandler {
 		return true;
 	}
 	
+	/**A cool sleep function (with some "." appearing in the console)
+	 * @param timeToSleep the time to sleep
+	 */
 	private void sleep (int timeToSleep) {
 		try {
 			for (int i = 0; i < timeToSleep; ++i) {
@@ -78,11 +112,17 @@ public class TwitterHandler {
 		}
 	}
 	
-	public List<Map<String, String>> searchBy (String recherche, int nbStatus) throws IOException {
+	/**The main step function to look for status with a word.
+	 * @param word The word to look for
+	 * @param nbStatus The number of status to get
+	 * @return The data found
+	 * @throws IOException some File exceptions
+	 */
+	public List<Map<String, String>> searchBy (String word, int nbStatus) throws IOException {
 
 		long sinceId = 0l;
 		
-		Query query = new Query(recherche);
+		Query query = new Query(word);
 		query.setCount(100);
 		int cpt = 0;
 		List<Map<String, String>> tweets = new ArrayList<Map<String, String>>();
@@ -90,7 +130,6 @@ public class TwitterHandler {
 		Etape3 nettoyeur = new Etape3("files/motsinutiles.txt");
 		motsInutiles = nettoyeur.Nettoyage();
 		boolean inutile = false;
-		int motsEnMoins = 0;
 		try { 
 			while (cpt < nbStatus){
 
@@ -111,7 +150,6 @@ public class TwitterHandler {
 						for (int j = 0; j < motsInutiles.size(); ++j){
 							
 							if (splitedText[i].equals(motsInutiles.get(j))){
-								motsEnMoins++;
 								inutile = true;
 								break;
 							}
@@ -174,6 +212,9 @@ public class TwitterHandler {
 		return tweets;
 	}
 	
+	/**The getter for the Twitter
+	 * @return the Twitter object
+	 */
 	public Twitter getTwitter() {
 		return twitter;
 	}	

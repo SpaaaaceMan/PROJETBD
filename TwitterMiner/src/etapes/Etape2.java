@@ -23,8 +23,8 @@ public class Etape2 {
 	
 	/**
 	 * This will generate all under item sets from an item set
-	 * @param itemSet
-	 * @return
+	 * @param itemSet the item from which we generate all under items
+	 * @return all under items
 	 */
 	public static ArrayList<String> getAllUnderItemSet (Collection<String> itemSet) {
 		//This the Level 0 items
@@ -90,6 +90,13 @@ public class Etape2 {
 		
 	}
 	
+	/**This is the main function of this step to extract DF
+	 * @param outPath The CSV file relative location
+	 * @param dfFilePath The location to put the DF File. (Can exists but will overwritten)
+	 * @param minFreq The minimum frequency to retain a DF.
+	 * @param minConf The minimum trust to retain a DF.
+	 * @return The File object of the DFs.
+	 */
 	public static File extractDF(String outPath, String dfFilePath, int minFreq, int minConf) {
 		//Create the file
     	File dfFile = null;
@@ -224,6 +231,13 @@ public class Etape2 {
 		return dfFile;
 	}
 	
+	/**This is like the main function of this step to extract DF but with a different return value
+	 * @param outPath The CSV file relative location.
+	 * @param dfFilePath The location to put the DF File. (Can exists but will overwritten)
+	 * @param minFreq The minimum frequency to retain a DF.
+	 * @param minConf The minimum trust to retain a DF.
+	 * @return The DF as an ArrayList
+	 */
 	public static ArrayList<AssociationRule> getExtractDF(String outPath, String dfFilePath, int minFreq, int minConf) {
 		//Create the file
     	File dfFile = null;
@@ -351,6 +365,10 @@ public class Etape2 {
 		return aR;
 	}
 	
+	/**Extract all Dfs regardless of the frequency and trust inside a file.
+	 * @param outPath The CSV file relative location.
+	 * @return The DF as an ArrayList
+	 */
 	public static ArrayList<AssociationRule> extractAllDf (String outPath) {
 
 		//Initialize the Buffered Stuff
@@ -459,6 +477,10 @@ public class Etape2 {
 		return aR;
 	}
 
+	/**The function executed from terminal execution
+	 * @param args Etape2 <apriori.out filepath (result from apriori algorithim)>" +
+					"<Df file path (parent directory must exist)> <minFreq (int)> <minConf (int)>
+	 */
 	public static void main(String[] args) {
 		if (args.length < 4) {
 			System.out.println("error : not enough arguments. Usage : Etape2 <apriori.out filepath (result from apriori algorithim)>" +
