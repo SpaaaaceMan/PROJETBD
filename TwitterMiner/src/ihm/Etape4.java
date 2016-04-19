@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -58,6 +60,19 @@ public class Etape4 {
 					search(searchBar.getText());
 			}
 		});
+		
+		searchBar.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+			}
+
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					search(searchBar.getText());
+			}
+			public void keyReleased(KeyEvent e) {
+			}
+		});
+
 		
 		panelSearch.add(searchBar, BorderLayout.CENTER);
 		panelSearch.add(searchButton, BorderLayout.EAST);
