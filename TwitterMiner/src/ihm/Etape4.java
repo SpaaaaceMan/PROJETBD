@@ -83,6 +83,7 @@ public class Etape4 {
 	}
 	
 	public void search (String motifs){
+		liste.clearSelection();
 		for(int i = 0; i < liste.getRowCount(); ++i){
 			if (liste.getValueAt(i, 0).toString().contains(motifs)){
 				System.out.println("trouvé");

@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class Etape3 {
 	
 	private String file;
@@ -49,7 +48,7 @@ public class Etape3 {
 				}
 			}
 		}
-		System.out.println("Voici les 10 meilleurs règles vis à vis du Lift : ");
+		System.out.println("Voici les 10 meilleurs rÃ¨gles vis Ã  vis du Lift : ");
 		for (int i = 0; i < 10; ++i){
 			System.out.print(rule[(rule.length-1) - i] + " : ");
 			System.out.println(bests[(bests.length-1) - i]);
